@@ -4,6 +4,10 @@
 
 In the project directory, you can run:
 
+### Figma design
+
+https://www.figma.com/file/KtrS8HtCKMWUbTAf07USE1/Untitled?node-id=0%3A1
+
 ### `npm start`
 
 Runs the app in the development mode.\
