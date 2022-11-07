@@ -1,0 +1,8 @@
+.empty {
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: calc(var(--border-radius) + 2px);
+
+  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='10' ry='10' stroke='%23427AA1FF' stroke-width='7' stroke-dasharray='25%2c 20' stroke-dashoffset='0' stroke-linecap='round'/%3e%3c/svg%3e");
+  border-radius: 10px;
+}

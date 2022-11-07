@@ -1,0 +1,50 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,400;1,500&display=swap");
+
+:root {
+  --main-color: #ebf2fa;
+  --main-color_dark: #0f3f49;
+
+  --text-color: #ebf2fa;
+  --text-color_dark: #222222;
+
+  --card-color: #064789;
+  --card-color_dark: #63d471;
+
+  --border-color: #427aa1;
+  --border-color_dark: #4e7d55;
+
+  --width: 1220px;
+  --border-radius: 8px;
+
+  --card-width: 115px;
+  --card-height: 178px;
+}
+
+html {
+  width: 100%;
+  font-size: 18px;
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  background: var(--main-color);
+  width: 100vw;
+  max-width: var(--width);
+  overflow-x: hidden;
+  margin: auto;
+  margin-top: 25px;
+  margin-bottom: 55px;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+/* TODO color themes
+@media (prefers-color-scheme: dark) {
+  body {
+    background: var(--main-color_dark);
+  }
+}
+ */

@@ -1,12 +1,13 @@
-import React from "react";
-import Card from "../Card/Card";
+import React, { FC } from "react";
+import Grid from "../Grid/Grid";
+import Nav from "../Nav/Nav";
 
-const App = () => {
+const App: FC = () => {
   return (
-    <div>
-      This is my app
-      <Card />
-    </div>
+    <main>
+      <Nav />
+      <Grid />
+    </main>
   );
 };
 

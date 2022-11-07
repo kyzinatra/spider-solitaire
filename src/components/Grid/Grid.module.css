@@ -1,0 +1,10 @@
+.grid {
+  display: grid;
+  margin-top: 55px;
+  width: 100%;
+  grid-template-columns: repeat(8, auto); /* TODO: Example*/
+  justify-content: center;
+  align-items: start;
+  gap: 40px;
+  font-size: 1rem;
+}
