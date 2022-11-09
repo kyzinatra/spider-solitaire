@@ -16,6 +16,9 @@ const Nav: FC = () => {
           <NavLink href="/">Игра</NavLink>
         </li>
         <li>
+          <NavLink href="/">Назад</NavLink>
+        </li>
+        <li>
           <NavInfo content={999999}>Длина</NavInfo>
         </li>
         <li>

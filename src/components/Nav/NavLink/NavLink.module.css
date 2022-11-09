@@ -17,8 +17,7 @@
 .link:active {
   background: linear-gradient(145deg, #d4dae1, #fbffff);
 }
-/*
-TODO: 
+
 @media (prefers-color-scheme: dark) {
   .link {
     background: linear-gradient(145deg, #10434e, #0e3942);
@@ -35,4 +34,3 @@ TODO:
     box-shadow: 6px 6px 12px #0d363f, -6px -6px 12px #114853;
   }
 }
-*/

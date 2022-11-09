@@ -17,3 +17,12 @@
   text-align: center;
   line-height: 2em;
 }
+
+@media (prefers-color-scheme: dark) {
+  .info {
+    color: var(--text-color);
+  }
+  .info__content {
+    border-color: var(--border-color_dark);
+  }
+}

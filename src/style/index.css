@@ -12,6 +12,7 @@
 
   --border-color: #427aa1;
   --border-color_dark: #4e7d55;
+  --boder-color_contrast: #222222;
 
   --width: 1220px;
   --border-radius: 8px;
@@ -41,10 +42,9 @@ body {
 *::before {
   box-sizing: border-box;
 }
-/* TODO color themes
+
 @media (prefers-color-scheme: dark) {
   body {
     background: var(--main-color_dark);
   }
 }
- */

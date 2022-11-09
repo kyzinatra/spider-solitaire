@@ -30,6 +30,10 @@
   border: 1px solid var(--border-color);
 }
 
+.card__dragging {
+  opacity: 0;
+}
+
 .card__title_center {
   align-self: center;
   flex-grow: 1;
@@ -41,4 +45,22 @@
 
 .card__title_bottom {
   align-self: end;
+}
+
+@media (prefers-color-scheme: dark) {
+  .card__wrapper {
+    color: var(--text-color_dark);
+  }
+  .card {
+    background-color: var(--card-color_dark);
+  }
+  .card__first.card_focus {
+    box-shadow: 0 0 10px var(--border-color_dark);
+  }
+  .card_border {
+    border: 1px solid var(--boder-color_contrast);
+  }
+  .card_focus {
+    border: 1px solid var(--main-color);
+  }
 }

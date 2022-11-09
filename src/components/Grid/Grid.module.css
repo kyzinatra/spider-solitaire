@@ -3,8 +3,8 @@
   margin-top: 55px;
   width: 100%;
   grid-template-columns: repeat(8, auto); /* TODO: Example*/
-  justify-content: center;
   align-items: start;
-  gap: 40px;
+  justify-content: space-between;
+  gap: 40px 0;
   font-size: 1rem;
 }
