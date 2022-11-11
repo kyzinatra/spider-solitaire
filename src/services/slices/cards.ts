@@ -1,22 +1,21 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { mockCards } from "../../constants/card";
 import { TCell, TGrid } from "../../types/card";
+import { isValidStack } from "../../utils/isValidConf";
 
 interface SelectState {
   cards: TGrid | null;
   dragCards: TCell | null;
   snapshots: TGrid[] | null;
+  dragId: string | number | null;
 }
 
 const initialState: SelectState = {
   // prettier-ignore
-  cards: [
-    [{ title: "A", key: "1" },{ title: "K", key: "2" },{ title: "Q", key: "3" },{ title: "V", key: "4" }, { title: "10", key: "5" }, { title: "9", key: "6" },{ title: "8", key: "7" },{ title: "7", key: "8" },{ title: "5", key: "9" }, { title: "4", key: "10" },{ title: "3", key: "11" },{ title: "2", key: "12" },],
-    [],[],
-    [{ title: "2", key: "13" }],[],[],[],[],[{ title: "7", key: "14" }],[],
-    [{ title: "10", key: "15" }],[],[],[],
-    [{ title: "A", key: "16" }],[],[],[{ title: "K", key: "17" }],[],[],[],[],[],[],],
+  cards: mockCards,
   dragCards: null,
   snapshots: null,
+  dragId: null,
 };
 
 export const cardSlice = createSlice({
@@ -27,13 +26,28 @@ export const cardSlice = createSlice({
       state.cards = action.payload;
     },
     setDragCards(state, action: PayloadAction<TCell>) {
+      const dragIndex = state.cards?.findIndex(cell => cell.some(card => card.key == action.payload?.[0].key));
       state.dragCards = action.payload;
+      state.dragId = dragIndex || -1;
+    },
+    moveCards(state, action: PayloadAction<number>) {
+      const toCell = state.cards?.[action.payload];
+      if (!state.dragCards || !toCell) return;
+      const isValidMove = !toCell.length || isValidStack([toCell[toCell.length - 1], ...state.dragCards]);
+      if (!isValidMove) return;
+
+      const fromCellIndex = state.cards?.findIndex(cell => cell.some(card => card.key == state.dragCards?.[0].key));
+      const fromCardIndex = state.cards?.[fromCellIndex || 0].findIndex(card => card.key == state.dragCards?.[0].key);
+      if (fromCellIndex == undefined || fromCardIndex == undefined) return;
+      // set new cards to place
+      state.cards?.[fromCellIndex].splice(fromCardIndex);
+      state.cards?.splice(action.payload, 1, [...toCell, ...state.dragCards]);
     },
     clearDrag(state) {
       state.dragCards = null;
     },
-    storeSnapshot(state, action: PayloadAction<TGrid>) {
-      state.snapshots = [...(state.snapshots || []), action.payload];
+    storeSnapshot(state) {
+      if (state.cards) state.snapshots = [...(state.snapshots || []), state.cards];
     },
     restoreSnapshot(state) {
       if (!state.snapshots?.length) return;
@@ -42,7 +56,6 @@ export const cardSlice = createSlice({
   },
 });
 
-export const { setCards, setDragCards, clearDrag, storeSnapshot, restoreSnapshot } =
-  cardSlice.actions;
+export const { setCards, setDragCards, clearDrag, storeSnapshot, restoreSnapshot, moveCards } = cardSlice.actions;
 
 export const cardReducer = cardSlice.reducer;

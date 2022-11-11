@@ -3,12 +3,12 @@ import { KeyboardSensor, MouseSensor, TouchSensor, useSensor, useSensors } from 
 export function useCustomSensors() {
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: {
-      distance: { x: 10, y: 10 },
+      distance: { x: 1, y: 1 },
     },
   });
   const touchSensor = useSensor(TouchSensor, {
     activationConstraint: {
-      distance: { x: 10, y: 10 },
+      distance: { x: 1, y: 1 },
     },
   });
   const keyboardSensor = useSensor(KeyboardSensor);

@@ -1,9 +1,10 @@
-import { useState, FocusEvent } from "react";
+import { useState, FocusEvent, MouseEvent } from "react";
 import { useDispatch } from "react-redux";
 import { TCell } from "../types/card";
 import { clearSelect, setSelect } from "../services/slices/select";
+import { isValidStack } from "../utils/isValidConf";
 
-type hookRet = [boolean, (e: FocusEvent) => void, (e: FocusEvent) => void];
+type hookRet = [boolean, { onFocus: (e: FocusEvent) => void; onBlur: (e: FocusEvent) => void }];
 
 export function useCardFocus(bottomCards: TCell, index: number): hookRet {
   const [isFoucs, setFocus] = useState(false);
@@ -20,5 +21,5 @@ export function useCardFocus(bottomCards: TCell, index: number): hookRet {
     setFocus(false);
   }
 
-  return [isFoucs, focusHandler, blurHandler];
+  return [isFoucs && isValidStack(bottomCards), { onFocus: focusHandler, onBlur: blurHandler }];
 }

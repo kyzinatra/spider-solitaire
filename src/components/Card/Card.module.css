@@ -19,6 +19,7 @@
   position: absolute;
   border: 1px solid transparent;
   transition: box-shadow 0.1s ease-in-out, border 0.1s ease-in-out;
+  transition: all 0.1s linear;
 }
 .card__first.card_focus {
   box-shadow: 0 0 10px var(--border-color);

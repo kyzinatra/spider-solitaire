@@ -1,8 +1,9 @@
-import { DndContext, DragOverlay, DragStartEvent } from "@dnd-kit/core";
+import { useDroppable } from "@dnd-kit/core";
 import React, { FC } from "react";
-import { useState } from "react";
 import { CARD_GAP, CARD_HEIGHT } from "../../../constants/card";
+import { useAppSelector } from "../../../services";
 import { TCell } from "../../../types/card";
+import { clx } from "../../../utils/clx";
 import Card from "../Card";
 import EmptyCard from "../EmptyCard/EmptyCard";
 import css from "./CardWrapper.module.css";
@@ -15,15 +16,20 @@ interface ICardWrapper {
 
 const CardWrapper: FC<ICardWrapper> = ({ cell, index, isUpFocus }) => {
   const cellHeight = CARD_HEIGHT + (cell.length - 1) * CARD_GAP + "px";
-
+  const dragId = useAppSelector(s => s.cards.dragId);
+  // prettier-ignore
+  const { setNodeRef, over, isOver: isElOver } = useDroppable({
+    id: index,
+  });
+  const isOver = over?.id !== dragId && isElOver ? true : false;
   return (
     <>
       {cell.length ? (
-        <div className={css.wrapper} style={{ height: cellHeight }}>
+        <div className={clx(css.wrapper, isOver && css.wrapper__over)} style={{ height: cellHeight }} ref={setNodeRef}>
           <Card isUpFocus={isUpFocus} bottomCards={cell} deepIndex={0} index={index} />
         </div>
       ) : (
-        <EmptyCard />
+        <EmptyCard ref={setNodeRef} isOver={isOver} />
       )}
     </>
   );

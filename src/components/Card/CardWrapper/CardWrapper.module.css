@@ -1,3 +1,15 @@
 .wrapper {
   position: relative;
+  transition: box-shadow 0.1s linear;
+  border-radius: calc(var(--border-radius) + 2px);
+}
+
+.wrapper__over {
+  box-shadow: 0 0 20px var(--border-color);
+}
+
+@media (prefers-color-scheme: dark) {
+  .wrapper__over {
+    box-shadow: 0 0 20px var(--border-color_dark);
+  }
 }

@@ -1,9 +1,13 @@
-import { DragOverlay, useDndContext, useDraggable } from "@dnd-kit/core";
 import React, { FC } from "react";
-import { CARD_DRAG, CARD_GAP } from "../../constants/card";
+
+import { useDraggable } from "@dnd-kit/core";
+
 import { useCardFocus } from "../../hooks/useCardFocus";
 import { TCell } from "../../types/card";
 import { clx } from "../../utils/clx";
+import { isValidStack } from "../../utils/isValidConf";
+import { CARD_GAP } from "../../constants/card";
+
 import css from "./Card.module.css";
 
 interface ICard {
@@ -14,21 +18,21 @@ interface ICard {
 }
 
 const Card: FC<ICard> = ({ bottomCards, deepIndex, isUpFocus, index }) => {
-  const [isFoucs, focusHandler, blurHandler] = useCardFocus(bottomCards, index);
+  const [isFoucs, focusAttr] = useCardFocus(bottomCards, index);
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
     id: bottomCards[0].key,
+    disabled: !isValidStack(bottomCards),
   });
   const currCard = bottomCards[0];
   const border = deepIndex && css.card_border;
-  const top = deepIndex ? CARD_GAP : 0;
+  const classNames = clx(css.card__wrapper, isDragging && css.card__dragging);
 
   return (
     <div
-      className={clx(css.card__wrapper, isDragging && css.card__dragging)}
-      style={{ top }}
-      onFocus={focusHandler}
-      onBlur={blurHandler}
+      className={classNames}
+      style={{ top: deepIndex ? CARD_GAP : 0 }}
       ref={setNodeRef}
+      {...focusAttr}
       {...listeners}
       {...attributes}
     >
