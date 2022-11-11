@@ -45,12 +45,7 @@ const Card: FC<ICard> = ({ bottomCards, deepIndex, isUpFocus, index }) => {
         <span className={clx(css.card__title, css.card__title_bottom)}>{currCard.title}</span>
       </div>
       {bottomCards.length > 1 && (
-        <Card
-          deepIndex={deepIndex + 1}
-          index={index}
-          isUpFocus={isFoucs || isUpFocus}
-          bottomCards={bottomCards.slice(1)}
-        />
+        <Card deepIndex={deepIndex + 1} index={index} isUpFocus={isFoucs || isUpFocus} bottomCards={bottomCards.slice(1)} />
       )}
     </div>
   );

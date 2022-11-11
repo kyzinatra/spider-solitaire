@@ -28,7 +28,7 @@ export const cardSlice = createSlice({
     setDragCards(state, action: PayloadAction<TCell>) {
       const dragIndex = state.cards?.findIndex(cell => cell.some(card => card.key == action.payload?.[0].key));
       state.dragCards = action.payload;
-      state.dragId = dragIndex || -1;
+      state.dragId = dragIndex !== undefined ? dragIndex : -1;
     },
     moveCards(state, action: PayloadAction<number>) {
       const toCell = state.cards?.[action.payload];
@@ -45,6 +45,7 @@ export const cardSlice = createSlice({
     },
     clearDrag(state) {
       state.dragCards = null;
+      state.dragId = null;
     },
     storeSnapshot(state) {
       if (state.cards) state.snapshots = [...(state.snapshots || []), state.cards];

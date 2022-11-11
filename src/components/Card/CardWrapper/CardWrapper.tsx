@@ -21,6 +21,7 @@ const CardWrapper: FC<ICardWrapper> = ({ cell, index, isUpFocus }) => {
   const { setNodeRef, over, isOver: isElOver } = useDroppable({
     id: index,
   });
+  console.log(over?.id, dragId, isElOver);
   const isOver = over?.id !== dragId && isElOver ? true : false;
   return (
     <>
