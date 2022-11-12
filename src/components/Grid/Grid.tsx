@@ -10,7 +10,8 @@ import { useCustomSensors } from "../../hooks/useCustomSensors";
 import { ProinterDetection } from "../../utils/collisionDetection";
 
 const Grid: FC = () => {
-  const { cards, dragCards } = useAppSelector(s => s.cards);
+  const { cards, dragCards, snapshots } = useAppSelector(s => s.cards);
+  console.log(cards, snapshots);
   const dispatch = useAppDispatch();
   const sensors = useCustomSensors();
 
@@ -23,8 +24,8 @@ const Grid: FC = () => {
 
   function dragEndHandler(event: DragEndEvent) {
     if (event.over?.id !== undefined) {
-      dispatch(moveCards(+event.over?.id));
       dispatch(storeSnapshot());
+      dispatch(moveCards(+event.over?.id));
       dispatch(checkFullStacks());
     }
     dispatch(clearDrag());

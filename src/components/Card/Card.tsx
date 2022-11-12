@@ -9,6 +9,9 @@ import { isValidStack } from "../../utils/isValidConf";
 import { CARD_GAP } from "../../constants/card";
 
 import css from "./Card.module.css";
+import { useAnimation } from "../../hooks/useAnimation";
+import { useAppDispatch } from "../../services";
+import { removeCards } from "../../services/slices/cards";
 
 interface ICard {
   bottomCards: TCell;
@@ -18,12 +21,20 @@ interface ICard {
 }
 
 const Card: FC<ICard> = ({ bottomCards, deepIndex, isUpFocus, index }) => {
+  const currCard = bottomCards[0];
+  const dispatch = useAppDispatch();
   const [isFoucs, focusAttr] = useCardFocus(bottomCards, index);
+
+  const isRemoved = useAnimation({
+    isStart: currCard.removed,
+    onAnimEnd: () => dispatch(removeCards([index, deepIndex])),
+  });
+
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
-    id: bottomCards[0].key,
+    id: currCard.key,
     disabled: !isValidStack(bottomCards),
   });
-  const currCard = bottomCards[0];
+
   const border = deepIndex && css.card_border;
   const classNames = clx(css.card__wrapper, isDragging && css.card__dragging);
 
@@ -38,7 +49,7 @@ const Card: FC<ICard> = ({ bottomCards, deepIndex, isUpFocus, index }) => {
     >
       {/* prettier-ignore */}
       <div 
-        className={clx(css.card, border, (isFoucs || isUpFocus) && css.card_focus, !deepIndex && css.card__first)}
+        className={clx(css.card, border, (isFoucs || isUpFocus) && css.card_focus, !deepIndex && css.card__first, isRemoved && css.card__removed)}
       >
         <span className={clx(css.card__title, css.card__title_top)}>{currCard.title}</span>
         <span className={clx(css.card__title, css.card__title_center)}>{currCard.title}</span>

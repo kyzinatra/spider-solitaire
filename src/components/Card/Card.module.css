@@ -48,6 +48,11 @@
   align-self: end;
 }
 
+.card__removed {
+  opacity: 0;
+  transition: opacity 0.3s linear;
+}
+
 @media (prefers-color-scheme: dark) {
   .card__wrapper {
     color: var(--text-color_dark);

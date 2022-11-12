@@ -36,22 +36,33 @@ export const cardSlice = createSlice({
     setCards(state, action: PayloadAction<TGrid>) {
       state.cards = action.payload;
     },
+    removeCards(state, action: PayloadAction<number[]>) {
+      state.cards?.[action.payload[0]].splice(action.payload[1], 1);
+    },
     setDragCards(state, action: PayloadAction<TCell>) {
       const dragIndex = state.cards?.findIndex(cell => cell.some(card => card.key === action.payload?.[0].key));
       state.dragCards = action.payload;
       state.dragId = dragIndex !== undefined ? dragIndex : -1;
     },
     checkFullStacks(state) {
-      state.cards?.forEach((cell, i) => {
+      const cards = state.cards;
+      if (!cards) return;
+      cards.forEach((cell, i) => {
         const findId = HasFullStack(cell);
-        if (~findId) state.cards?.[i].splice(findId, MAX_CARD_VALUE + 1);
+        if (~findId) {
+          for (let j = findId; j < findId + MAX_CARD_VALUE + 1; j++) cards[i][j].removed = true;
+        }
       });
     },
+
     moveCards(state, action: PayloadAction<number>) {
       const toCell = state.cards?.[action.payload];
       if (!state.dragCards || !toCell) return;
       const isValidMove = !toCell.length || isValidStack([toCell[toCell.length - 1], ...state.dragCards]);
-      if (!isValidMove) return;
+      if (!isValidMove) {
+        state.snapshots?.pop();
+        return;
+      }
 
       const fromCardIndex = state.cards?.[+(state.dragId || 0)].findIndex(card => card.key === state.dragCards?.[0].key);
       if (state.dragId === null || fromCardIndex === undefined) return;
@@ -78,7 +89,7 @@ export const cardSlice = createSlice({
   },
 });
 
-export const { setCards, setDragCards, clearDrag, storeSnapshot, restoreSnapshot, moveCards, checkFullStacks } =
+export const { setCards, setDragCards, clearDrag, storeSnapshot, restoreSnapshot, moveCards, checkFullStacks, removeCards } =
   cardSlice.actions;
 
 export const cardReducer = cardSlice.reducer;

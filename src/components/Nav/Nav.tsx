@@ -1,13 +1,19 @@
-import React, { FC } from "react";
+import React, { FC, MouseEvent } from "react";
 import { clx } from "../../utils/clx";
 import NavLink from "./NavLink/NavLink";
 import NavInfo from "./NavInfo/NavInfo";
 
 import css from "./Nav.module.css";
-import { useAppSelector } from "../../services";
+import { useAppDispatch, useAppSelector } from "../../services";
+import { restoreSnapshot } from "../../services/slices/cards";
 
 const Nav: FC = () => {
   const { length, drops, steps } = useAppSelector(s => s.cards.stats);
+  const dispacth = useAppDispatch();
+  function backClick(e: MouseEvent) {
+    e.preventDefault();
+    dispacth(restoreSnapshot());
+  }
 
   return (
     <nav className={clx(css.nav)}>
@@ -19,7 +25,10 @@ const Nav: FC = () => {
           <NavLink href="/">Игра</NavLink>
         </li>
         <li>
-          <NavLink href="/">Назад</NavLink>
+          {/*TODO: Сделать это кнопками а не ссылками обязательно  */}
+          <NavLink href="/" onClick={backClick}>
+            Назад
+          </NavLink>
         </li>
         <li>
           <NavInfo content={length}>Длина</NavInfo>
