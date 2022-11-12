@@ -1,4 +1,3 @@
-import { DndContext } from "@dnd-kit/core";
 import React, { FC } from "react";
 import Grid from "../Grid/Grid";
 import Nav from "../Nav/Nav";

@@ -4,8 +4,11 @@ import NavLink from "./NavLink/NavLink";
 import NavInfo from "./NavInfo/NavInfo";
 
 import css from "./Nav.module.css";
+import { useAppSelector } from "../../services";
 
 const Nav: FC = () => {
+  const { length, drops, steps } = useAppSelector(s => s.cards.stats);
+
   return (
     <nav className={clx(css.nav)}>
       <ul className={clx(css.nav__list)}>
@@ -19,13 +22,13 @@ const Nav: FC = () => {
           <NavLink href="/">Назад</NavLink>
         </li>
         <li>
-          <NavInfo content={999999}>Длина</NavInfo>
+          <NavInfo content={length}>Длина</NavInfo>
         </li>
         <li>
-          <NavInfo content={0}>Шаги</NavInfo>
+          <NavInfo content={steps}>Шаги</NavInfo>
         </li>
         <li>
-          <NavInfo content={100}>Сбросы</NavInfo>
+          <NavInfo content={drops}>Сбросы</NavInfo>
         </li>
       </ul>
     </nav>

@@ -4,8 +4,8 @@ import { TCell } from "../../types/card";
 import css from "./Grid.module.css";
 import { DndContext, DragEndEvent, DragOverlay, DragStartEvent } from "@dnd-kit/core";
 import { useAppDispatch, useAppSelector } from "../../services";
-import { clearDrag, moveCards, setDragCards } from "../../services/slices/cards";
-import { getStackById } from "../../utils/getStackById";
+import { checkFullStacks, clearDrag, moveCards, setDragCards, storeSnapshot } from "../../services/slices/cards";
+import { getStackById } from "../../utils/Stack";
 import { useCustomSensors } from "../../hooks/useCustomSensors";
 import { ProinterDetection } from "../../utils/collisionDetection";
 
@@ -22,7 +22,11 @@ const Grid: FC = () => {
   }
 
   function dragEndHandler(event: DragEndEvent) {
-    if (event.over?.id != undefined) dispatch(moveCards(+event.over?.id));
+    if (event.over?.id !== undefined) {
+      dispatch(moveCards(+event.over?.id));
+      dispatch(storeSnapshot());
+      dispatch(checkFullStacks());
+    }
     dispatch(clearDrag());
   }
 

@@ -19,6 +19,8 @@
 
   --card-width: 115px;
   --card-height: 178px;
+  --scroll-size: 10px;
+  --scroll-radius: 10px;
 }
 
 html {
@@ -29,12 +31,15 @@ html {
 
 body {
   background: var(--main-color);
-  width: 100vw;
+  width: 100%;
   max-width: var(--width);
   overflow-x: hidden;
   margin: auto;
   margin-top: 25px;
   margin-bottom: 55px;
+  overscroll-behavior: contain;
+
+  --scroll-thumb: linear-gradient(45deg, var(--card-color), #80b6de);
 }
 
 *,
@@ -43,8 +48,24 @@ body {
   box-sizing: border-box;
 }
 
+body {
+  scrollbar-width: thin;
+}
+body::-webkit-scrollbar {
+  width: var(--scroll-size);
+  height: var(--scroll-size);
+}
+body::-webkit-scrollbar-track {
+  background-color: var(--scroll-track);
+}
+body::-webkit-scrollbar-thumb {
+  background-image: var(--scroll-thumb);
+  border-radius: var(--scroll-radius);
+}
+
 @media (prefers-color-scheme: dark) {
   body {
     background: var(--main-color_dark);
+    --scroll-thumb: linear-gradient(45deg, var(--border-color_dark), #82e88e);
   }
 }

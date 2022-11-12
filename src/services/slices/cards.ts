@@ -1,13 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { mockCards } from "../../constants/card";
+import { MAX_CARD_VALUE, mockCards } from "../../constants/card";
 import { TCell, TGrid } from "../../types/card";
 import { isValidStack } from "../../utils/isValidConf";
+import { HasFullStack } from "../../utils/Stack";
 
 interface SelectState {
   cards: TGrid | null;
   dragCards: TCell | null;
   snapshots: TGrid[] | null;
   dragId: string | number | null;
+  stats: {
+    length: number;
+    steps: number;
+    drops: number;
+  };
 }
 
 const initialState: SelectState = {
@@ -16,6 +22,11 @@ const initialState: SelectState = {
   dragCards: null,
   snapshots: null,
   dragId: null,
+  stats: {
+    length: 0,
+    steps: 0,
+    drops: 0,
+  },
 };
 
 export const cardSlice = createSlice({
@@ -26,9 +37,15 @@ export const cardSlice = createSlice({
       state.cards = action.payload;
     },
     setDragCards(state, action: PayloadAction<TCell>) {
-      const dragIndex = state.cards?.findIndex(cell => cell.some(card => card.key == action.payload?.[0].key));
+      const dragIndex = state.cards?.findIndex(cell => cell.some(card => card.key === action.payload?.[0].key));
       state.dragCards = action.payload;
       state.dragId = dragIndex !== undefined ? dragIndex : -1;
+    },
+    checkFullStacks(state) {
+      state.cards?.forEach((cell, i) => {
+        const findId = HasFullStack(cell);
+        if (~findId) state.cards?.[i].splice(findId, MAX_CARD_VALUE + 1);
+      });
     },
     moveCards(state, action: PayloadAction<number>) {
       const toCell = state.cards?.[action.payload];
@@ -36,12 +53,16 @@ export const cardSlice = createSlice({
       const isValidMove = !toCell.length || isValidStack([toCell[toCell.length - 1], ...state.dragCards]);
       if (!isValidMove) return;
 
-      const fromCellIndex = state.cards?.findIndex(cell => cell.some(card => card.key == state.dragCards?.[0].key));
-      const fromCardIndex = state.cards?.[fromCellIndex || 0].findIndex(card => card.key == state.dragCards?.[0].key);
-      if (fromCellIndex == undefined || fromCardIndex == undefined) return;
-      // set new cards to place
-      state.cards?.[fromCellIndex].splice(fromCardIndex);
+      const fromCardIndex = state.cards?.[+(state.dragId || 0)].findIndex(card => card.key === state.dragCards?.[0].key);
+      if (state.dragId === null || fromCardIndex === undefined) return;
+      //? set new cards to place
+      state.cards?.[+state.dragId].splice(fromCardIndex);
       state.cards?.splice(action.payload, 1, [...toCell, ...state.dragCards]);
+
+      //? update stats
+      state.stats.drops += +!toCell.length;
+      state.stats.steps++;
+      state.stats.length += Math.abs(+state.dragId - action.payload);
     },
     clearDrag(state) {
       state.dragCards = null;
@@ -57,6 +78,7 @@ export const cardSlice = createSlice({
   },
 });
 
-export const { setCards, setDragCards, clearDrag, storeSnapshot, restoreSnapshot, moveCards } = cardSlice.actions;
+export const { setCards, setDragCards, clearDrag, storeSnapshot, restoreSnapshot, moveCards, checkFullStacks } =
+  cardSlice.actions;
 
 export const cardReducer = cardSlice.reducer;

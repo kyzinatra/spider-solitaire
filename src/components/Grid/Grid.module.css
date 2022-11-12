@@ -2,9 +2,15 @@
   display: grid;
   margin-top: 55px;
   width: 100%;
-  grid-template-columns: repeat(8, auto); /* TODO: Example*/
+  grid-template-columns: repeat(auto-fit, var(--card-width));
   align-items: start;
   justify-content: space-between;
-  gap: 40px 0;
+  gap: 40px;
   font-size: 1rem;
+}
+
+@media screen and (width <= 1220px) {
+  .grid {
+    padding: 0 20px;
+  }
 }
