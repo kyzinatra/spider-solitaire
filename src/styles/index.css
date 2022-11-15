@@ -14,7 +14,7 @@
   --border-color_dark: #4e7d55;
   --boder-color_contrast: #222222;
 
-  --width: 1220px;
+  --width: 1320px;
   --border-radius: 8px;
 
   --card-width: 115px;
@@ -34,9 +34,7 @@ body {
   width: 100%;
   max-width: var(--width);
   overflow-x: hidden;
-  margin: auto;
-  margin-top: 25px;
-  margin-bottom: 55px;
+  margin: 40px auto;
   overscroll-behavior: contain;
 
   --scroll-thumb: linear-gradient(45deg, var(--card-color), #80b6de);

@@ -20,7 +20,7 @@ interface ICard {
   index: number;
 }
 
-const Card: FC<ICard> = ({ bottomCards, deepIndex, isUpFocus, index }) => {
+export const Card: FC<ICard> = ({ bottomCards, deepIndex, isUpFocus, index }) => {
   const currCard = bottomCards[0];
   const dispatch = useAppDispatch();
   const [isFoucs, focusAttr] = useCardFocus(bottomCards, index);
@@ -60,5 +60,3 @@ const Card: FC<ICard> = ({ bottomCards, deepIndex, isUpFocus, index }) => {
     </div>
   );
 };
-
-export default Card;

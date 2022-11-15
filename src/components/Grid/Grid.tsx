@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { DndContext, DragEndEvent, DragOverlay, DragStartEvent } from "@dnd-kit/core";
 
-import CardWrapper from "../Card/CardWrapper/CardWrapper";
+import { CardWrapper } from "../Card/CardWrapper/CardWrapper";
 
 import css from "./Grid.module.css";
 
@@ -14,7 +14,7 @@ import { ProinterDetection } from "../../utils/collisionDetection";
 import { useCustomSensors } from "../../hooks/useCustomSensors";
 import { TCell } from "../../types/card";
 
-const Grid: FC = () => {
+export const Grid: FC = () => {
   const { cards, dragCards } = useAppSelector(s => s.cards);
   const dispatch = useAppDispatch();
   const sensors = useCustomSensors();
@@ -51,5 +51,3 @@ const Grid: FC = () => {
     </DndContext>
   );
 };
-
-export default Grid;

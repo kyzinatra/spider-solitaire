@@ -7,8 +7,10 @@ interface IEmptyCard {
   isOver?: boolean;
 }
 
-const EmptyCard: FC<IEmptyCard> = ({ forwardRef, isOver }) => {
+const EmptyCardComponent: FC<IEmptyCard> = ({ forwardRef, isOver }) => {
   return <div className={clx(css.empty, isOver && css.empty__over)} ref={forwardRef} />;
 };
 
-export default React.forwardRef<HTMLDivElement, IEmptyCard>((props, ref) => <EmptyCard {...props} forwardRef={ref} />);
+export const EmptyCard = React.forwardRef<HTMLDivElement, IEmptyCard>((props, ref) => (
+  <EmptyCardComponent {...props} forwardRef={ref} />
+));

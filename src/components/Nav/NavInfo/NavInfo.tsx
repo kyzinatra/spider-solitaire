@@ -7,14 +7,12 @@ interface INavInfo {
   className?: string;
 }
 
-const NavInfo: FC<PropsWithChildren<INavInfo>> = ({ content = 0, children, className }) => {
+export const NavInfo: FC<PropsWithChildren<INavInfo>> = ({ content = 0, children }) => {
   if (content > 999999) content = 999999;
   return (
-    <div className={clx(className, css.info)}>
+    <div className={css.info}>
       <span className={clx(css.info__title)}>{children}</span>
       <span className={clx(css.info__content)}>{new Intl.NumberFormat(undefined, { style: "decimal" }).format(content)}</span>
     </div>
   );
 };
-
-export default NavInfo;

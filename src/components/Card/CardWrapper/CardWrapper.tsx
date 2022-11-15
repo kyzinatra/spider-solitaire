@@ -4,8 +4,8 @@ import { CARD_GAP, CARD_HEIGHT } from "../../../constants/card";
 import { useAppSelector } from "../../../services";
 import { TCell } from "../../../types/card";
 import { clx } from "../../../utils/clx";
-import Card from "../Card";
-import EmptyCard from "../EmptyCard/EmptyCard";
+import { Card } from "../Card";
+import { EmptyCard } from "../EmptyCard/EmptyCard";
 import css from "./CardWrapper.module.css";
 
 interface ICardWrapper {
@@ -14,7 +14,7 @@ interface ICardWrapper {
   isUpFocus?: boolean;
 }
 
-const CardWrapper: FC<ICardWrapper> = ({ cell, index, isUpFocus }) => {
+export const CardWrapper: FC<ICardWrapper> = ({ cell, index, isUpFocus }) => {
   const cellHeight = CARD_HEIGHT + (cell.length - 1) * CARD_GAP + "px";
   const dragId = useAppSelector(s => s.cards.dragId);
   // prettier-ignore
@@ -34,5 +34,3 @@ const CardWrapper: FC<ICardWrapper> = ({ cell, index, isUpFocus }) => {
     </>
   );
 };
-
-export default CardWrapper;
