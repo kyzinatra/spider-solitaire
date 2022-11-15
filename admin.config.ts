@@ -9,6 +9,7 @@ let app: App | undefined;
 const env = process.env;
 
 if (!admin.apps.length) {
+  console.log(env.PRIVATE_KEY_ID);
   app = initializeApp({
     credential: admin.credential.cert({
       type: env.TYPE,
