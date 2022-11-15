@@ -1,13 +1,18 @@
 import React, { FC } from "react";
-import CardWrapper from "../Card/CardWrapper/CardWrapper";
-import { TCell } from "../../types/card";
-import css from "./Grid.module.css";
 import { DndContext, DragEndEvent, DragOverlay, DragStartEvent } from "@dnd-kit/core";
+
+import CardWrapper from "../Card/CardWrapper/CardWrapper";
+
+import css from "./Grid.module.css";
+
 import { useAppDispatch, useAppSelector } from "../../services";
 import { checkFullStacks, clearDrag, moveCards, setDragCards, storeSnapshot } from "../../services/slices/cards";
+
 import { getStackById } from "../../utils/stack";
-import { useCustomSensors } from "../../hooks/useCustomSensors";
 import { ProinterDetection } from "../../utils/collisionDetection";
+
+import { useCustomSensors } from "../../hooks/useCustomSensors";
+import { TCell } from "../../types/card";
 
 const Grid: FC = () => {
   const { cards, dragCards } = useAppSelector(s => s.cards);
