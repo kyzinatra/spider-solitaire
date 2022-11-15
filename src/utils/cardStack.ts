@@ -8,7 +8,7 @@ export function getStackById(grid: TGrid, id: string | number): null | TCell {
   return [...cell].slice(keyIndex);
 }
 
-export function HasFullStack(cell: TCell): number {
+export function hasFullStack(cell: TCell): number {
   let stackCount = 0;
   let res = -1;
   cell.forEach((card, i) => {

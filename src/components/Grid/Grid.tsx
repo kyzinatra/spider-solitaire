@@ -8,7 +8,7 @@ import css from "./Grid.module.css";
 import { useAppDispatch, useAppSelector } from "../../services";
 import { checkFullStacks, clearDrag, moveCards, setDragCards, storeSnapshot } from "../../services/slices/cards";
 
-import { getStackById } from "../../utils/stack";
+import { getStackById } from "../../utils/cardStack";
 import { ProinterDetection } from "../../utils/collisionDetection";
 
 import { useCustomSensors } from "../../hooks/useCustomSensors";

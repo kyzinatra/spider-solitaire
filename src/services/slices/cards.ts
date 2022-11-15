@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { MAX_CARD_VALUE, mockCards } from "../../constants/card";
 import { TCell, TGrid } from "../../types/card";
 import { isValidStack } from "../../utils/isValidStack";
-import { HasFullStack } from "../../utils/stack";
+import { hasFullStack } from "../../utils/cardStack";
 
 interface IStats {
   length: number;
@@ -52,7 +52,7 @@ export const cardSlice = createSlice({
       const cards = state.cards;
       if (!cards) return;
       cards.forEach((cell, i) => {
-        const findId = HasFullStack(cell);
+        const findId = hasFullStack(cell);
         if (~findId) {
           for (let j = findId; j < findId + MAX_CARD_VALUE + 1; j++) cards[i][j].removed = true;
         }
