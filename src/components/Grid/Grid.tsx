@@ -5,13 +5,12 @@ import css from "./Grid.module.css";
 import { DndContext, DragEndEvent, DragOverlay, DragStartEvent } from "@dnd-kit/core";
 import { useAppDispatch, useAppSelector } from "../../services";
 import { checkFullStacks, clearDrag, moveCards, setDragCards, storeSnapshot } from "../../services/slices/cards";
-import { getStackById } from "../../utils/Stack";
+import { getStackById } from "../../utils/stack";
 import { useCustomSensors } from "../../hooks/useCustomSensors";
 import { ProinterDetection } from "../../utils/collisionDetection";
 
 const Grid: FC = () => {
-  const { cards, dragCards, snapshots } = useAppSelector(s => s.cards);
-  console.log(cards, snapshots);
+  const { cards, dragCards } = useAppSelector(s => s.cards);
   const dispatch = useAppDispatch();
   const sensors = useCustomSensors();
 

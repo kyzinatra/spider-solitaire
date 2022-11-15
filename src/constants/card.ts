@@ -4,7 +4,6 @@ export const CARD_GAP = 30;
 
 export const CARD_DRAG = "CARD_DRAG";
 export const CARD_VALUES = {
-  //! All cards values from 0 to n
   "2": 0,
   "3": 1,
   "4": 2,
@@ -20,7 +19,7 @@ export const CARD_VALUES = {
   "A": 12,
 };
 
-export const MAX_CARD_VALUE = 12; //! n
+export const MAX_CARD_VALUE = 12;
 
 export const mockCards: TGrid = [
   [
@@ -42,6 +41,7 @@ export const mockCards: TGrid = [
 
     { title: "2", key: "9" },
     { title: "6", key: "10" },
+    { title: "10", key: "10ccc" },
     { title: "2", key: "11" },
   ],
   [
@@ -60,7 +60,7 @@ export const mockCards: TGrid = [
   ],
   [
     { title: "7", key: "20" },
-    { title: "8", key: "21" },
+    { title: "5", key: "21" },
     { title: "8", key: "22" },
   ],
   [

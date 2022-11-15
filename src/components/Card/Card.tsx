@@ -5,7 +5,7 @@ import { useDraggable } from "@dnd-kit/core";
 import { useCardFocus } from "../../hooks/useCardFocus";
 import { TCell } from "../../types/card";
 import { clx } from "../../utils/clx";
-import { isValidStack } from "../../utils/isValidConf";
+import { isValidStack } from "../../utils/isValidStack";
 import { CARD_GAP } from "../../constants/card";
 
 import css from "./Card.module.css";
@@ -24,10 +24,11 @@ const Card: FC<ICard> = ({ bottomCards, deepIndex, isUpFocus, index }) => {
   const currCard = bottomCards[0];
   const dispatch = useAppDispatch();
   const [isFoucs, focusAttr] = useCardFocus(bottomCards, index);
-
   const isRemoved = useAnimation({
     isStart: currCard.removed,
-    onAnimEnd: () => dispatch(removeCards([index, deepIndex])),
+    onAnimEnd: () => {
+      dispatch(removeCards([index, deepIndex]));
+    },
   });
 
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
@@ -37,6 +38,7 @@ const Card: FC<ICard> = ({ bottomCards, deepIndex, isUpFocus, index }) => {
 
   const border = deepIndex && css.card_border;
   const classNames = clx(css.card__wrapper, isDragging && css.card__dragging);
+  const foucsStyle = (isFoucs || isUpFocus) && css.card_focus;
 
   return (
     <div
@@ -47,10 +49,7 @@ const Card: FC<ICard> = ({ bottomCards, deepIndex, isUpFocus, index }) => {
       {...listeners}
       {...attributes}
     >
-      {/* prettier-ignore */}
-      <div 
-        className={clx(css.card, border, (isFoucs || isUpFocus) && css.card_focus, !deepIndex && css.card__first, isRemoved && css.card__removed)}
-      >
+      <div className={clx(css.card, border, foucsStyle, !deepIndex && css.card__first, isRemoved && css.card__removed)}>
         <span className={clx(css.card__title, css.card__title_top)}>{currCard.title}</span>
         <span className={clx(css.card__title, css.card__title_center)}>{currCard.title}</span>
         <span className={clx(css.card__title, css.card__title_bottom)}>{currCard.title}</span>

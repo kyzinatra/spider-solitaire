@@ -12,9 +12,7 @@ const NavInfo: FC<PropsWithChildren<INavInfo>> = ({ content = 0, children, class
   return (
     <div className={clx(className, css.info)}>
       <span className={clx(css.info__title)}>{children}</span>
-      <span className={clx(css.info__content)}>
-        {new Intl.NumberFormat(undefined, { style: "decimal" }).format(content)}
-      </span>
+      <span className={clx(css.info__content)}>{new Intl.NumberFormat(undefined, { style: "decimal" }).format(content)}</span>
     </div>
   );
 };

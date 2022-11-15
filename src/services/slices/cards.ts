@@ -1,27 +1,31 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { MAX_CARD_VALUE, mockCards } from "../../constants/card";
 import { TCell, TGrid } from "../../types/card";
-import { isValidStack } from "../../utils/isValidConf";
-import { HasFullStack } from "../../utils/Stack";
+import { isValidStack } from "../../utils/isValidStack";
+import { HasFullStack } from "../../utils/stack";
+
+interface IStats {
+  length: number;
+  steps: number;
+  drops: number;
+}
 
 interface SelectState {
   cards: TGrid | null;
   dragCards: TCell | null;
-  snapshots: TGrid[] | null;
+  snapshots: TGrid[];
+  statsSnapshots: IStats[];
   dragId: string | number | null;
-  stats: {
-    length: number;
-    steps: number;
-    drops: number;
-  };
+  stats: IStats;
 }
 
 const initialState: SelectState = {
   // prettier-ignore
   cards: mockCards,
   dragCards: null,
-  snapshots: null,
   dragId: null,
+  snapshots: [],
+  statsSnapshots: [],
   stats: {
     length: 0,
     steps: 0,
@@ -59,8 +63,10 @@ export const cardSlice = createSlice({
       const toCell = state.cards?.[action.payload];
       if (!state.dragCards || !toCell) return;
       const isValidMove = !toCell.length || isValidStack([toCell[toCell.length - 1], ...state.dragCards]);
+
       if (!isValidMove) {
         state.snapshots?.pop();
+        state.statsSnapshots?.pop();
         return;
       }
 
@@ -80,11 +86,16 @@ export const cardSlice = createSlice({
       state.dragId = null;
     },
     storeSnapshot(state) {
-      if (state.cards) state.snapshots = [...(state.snapshots || []), state.cards];
+      if (!state.cards) return;
+
+      state.cards.forEach(cell => cell.map(card => ({ ...card, removed: undefined })));
+      state.snapshots.push(state.cards);
+      state.statsSnapshots.push(state.stats);
     },
     restoreSnapshot(state) {
       if (!state.snapshots?.length) return;
       state.cards = state.snapshots.pop() || null;
+      state.stats = state.statsSnapshots.pop() || initialState.stats;
     },
   },
 });

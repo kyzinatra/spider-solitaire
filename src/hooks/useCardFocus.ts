@@ -1,8 +1,8 @@
-import { useState, FocusEvent, MouseEvent } from "react";
+import { useState, FocusEvent } from "react";
 import { useDispatch } from "react-redux";
 import { TCell } from "../types/card";
 import { clearSelect, setSelect } from "../services/slices/select";
-import { isValidStack } from "../utils/isValidConf";
+import { isValidStack } from "../utils/isValidStack";
 
 type hookRet = [boolean, { onFocus: (e: FocusEvent) => void; onBlur: (e: FocusEvent) => void }];
 
