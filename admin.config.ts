@@ -23,6 +23,7 @@ if (!admin.apps.length) {
       auth_provider_x509_cert_url: env.AUTH_PROVIDER_X509_CERT_URL,
       client_x509_cert_url: env.CLIENT_X509_CERT_URL,
     } as ServiceAccount),
+    databaseURL: env.NEXT_PUBLIC_DB_URL,
   });
 }
 

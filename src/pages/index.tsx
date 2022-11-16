@@ -6,15 +6,12 @@ import { Stats } from "../components/Stats/Stats";
 
 import css from "./index.module.css";
 
-import type { GetServerSideProps, GetStaticProps } from "next";
-import { app } from "../../admin.config";
-
 export default function Index() {
   return (
     <Layout>
       <header className={css.header}>
-        <Nav />
         <Stats />
+        <Nav />
       </header>
       <main>
         <Grid />

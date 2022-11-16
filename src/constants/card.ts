@@ -1,7 +1,4 @@
 import { TGrid } from "../types/card";
-export const CARD_HEIGHT = 178;
-export const CARD_GAP = 30;
-
 export const CARD_DRAG = "CARD_DRAG";
 export const CARD_VALUES = {
   "2": 0,

@@ -6,9 +6,15 @@ import css from "../NavLink/NavLink.module.css";
 interface INavButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
 export const NavButton: FC<INavButton> = ({ children, className, ...props }) => {
+  if (typeof window != "undefined" && window.location.pathname !== "/") {
+    return null;
+  }
+
   return (
-    <button className={clx(className, css.link)} {...props}>
-      {children}
-    </button>
+    <li>
+      <button className={clx(className, css.link)} {...props}>
+        {children}
+      </button>
+    </li>
   );
 };

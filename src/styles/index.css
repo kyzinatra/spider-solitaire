@@ -1,31 +1,35 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,400;1,500&display=swap");
-
+/* prettier-ignore */
 :root {
-  --main-color: #ebf2fa;
-  --main-color_dark: #0f3f49;
+  --main-color:           #ebf2fa;
+  --main-color_dark:      #0f3f49;
 
-  --text-color: #ebf2fa;
-  --text-color_dark: #222222;
+  --text-color:           #ebf2fa;
+  --text-color_dark:      #222222;
 
-  --card-color: #064789;
-  --card-color_dark: #63d471;
+  --card-color:           #064789;
+  --card-color_dark:      #63d471;
 
-  --border-color: #427aa1;
-  --border-color_dark: #4e7d55;
+  --border-color:         #427aa1;
+  --border-color_dark:    #4e7d55;
   --boder-color_contrast: #222222;
 
-  --width: 1320px;
-  --border-radius: 8px;
+  --width:                  1320px;
+  --border-radius:          8px;
 
-  --card-width: 115px;
-  --card-height: 178px;
-  --scroll-size: 10px;
-  --scroll-radius: 10px;
+  --card-width:             115px;
+  --card-height:            178px;
+  --card-gap:               30px;
+
+  --scroll-size:            10px;
+  --scroll-radius:          10px;
+
+  --font-size:              18px;
 }
 
 html {
   width: 100%;
-  font-size: 18px;
+  font-size: var(--font-size);
   font-family: "Roboto", sans-serif;
 }
 
@@ -34,7 +38,7 @@ body {
   width: 100%;
   max-width: var(--width);
   overflow-x: hidden;
-  margin: 40px auto;
+  margin: 25px auto;
   overscroll-behavior: contain;
 
   --scroll-thumb: linear-gradient(45deg, var(--card-color), #80b6de);

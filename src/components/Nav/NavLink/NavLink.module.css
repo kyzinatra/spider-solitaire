@@ -4,10 +4,14 @@
   background: linear-gradient(145deg, #fbffff, #d4dae1);
   box-shadow: 6px 6px 12px #cad0d7, -6px -6px 12px #ffffff;
   border: none;
-  padding: 10px 30px;
+  padding: 5px 5px;
   cursor: pointer;
   color: var(--text-color_dark);
   text-decoration: none;
+}
+
+.link img {
+  display: block;
 }
 
 .link:hover {
@@ -23,6 +27,9 @@
     background: linear-gradient(145deg, #10434e, #0e3942);
     box-shadow: 6px 6px 12px #0d363f, -6px -6px 12px #114853;
     color: var(--text-color);
+  }
+  .link img {
+    filter: invert(1);
   }
   .link:hover {
     background: #0f3f49;

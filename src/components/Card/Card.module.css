@@ -3,6 +3,7 @@
   min-height: var(--card-height);
   color: var(--text-color);
   position: relative;
+  top: calc(var(--is-card-deep) * var(--card-gap));
 }
 
 .card {

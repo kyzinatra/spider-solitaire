@@ -6,7 +6,6 @@ import { useCardFocus } from "../../hooks/useCardFocus";
 import { TCell } from "../../types/card";
 import { clx } from "../../utils/clx";
 import { isValidStack } from "../../utils/isValidStack";
-import { CARD_GAP } from "../../constants/card";
 
 import css from "./Card.module.css";
 import { useAnimation } from "../../hooks/useAnimation";
@@ -36,19 +35,14 @@ export const Card: FC<ICard> = ({ bottomCards, deepIndex, isUpFocus, index }) =>
     disabled: !isValidStack(bottomCards),
   });
 
-  const border = deepIndex && css.card_border;
   const classNames = clx(css.card__wrapper, isDragging && css.card__dragging);
+  const isDeep = { "--is-card-deep": +!!deepIndex } as object;
+
+  const border = deepIndex && css.card_border;
   const foucsStyle = (isFoucs || isUpFocus) && css.card_focus;
 
   return (
-    <div
-      className={classNames}
-      style={{ top: deepIndex ? CARD_GAP : 0 }}
-      ref={setNodeRef}
-      {...focusAttr}
-      {...listeners}
-      {...attributes}
-    >
+    <div className={classNames} style={isDeep} ref={setNodeRef} {...focusAttr} {...listeners} {...attributes}>
       <div className={clx(css.card, border, foucsStyle, !deepIndex && css.card__first, isRemoved && css.card__removed)}>
         <span className={clx(css.card__title, css.card__title_top)}>{currCard.title}</span>
         <span className={clx(css.card__title, css.card__title_center)}>{currCard.title}</span>
