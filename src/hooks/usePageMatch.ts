@@ -1,9 +1,11 @@
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 export function usePageMatch(path: string) {
   const [isMatch, setMatch] = useState(false);
+  const router = useRouter();
   useEffect(() => {
-    if (typeof window != "undefined" && path == window.location.pathname) {
+    if (path == router.pathname) {
       return setMatch(true);
     }
     setMatch(false);

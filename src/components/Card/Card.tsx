@@ -9,7 +9,7 @@ import { isValidStack } from "../../utils/isValidStack";
 
 import css from "./Card.module.css";
 import { useAnimation } from "../../hooks/useAnimation";
-import { useAppDispatch } from "../../services";
+import { useAppDispatch, useAppSelector } from "../../services";
 import { removeCards } from "../../services/slices/cards";
 
 interface ICard {
@@ -17,11 +17,13 @@ interface ICard {
   deepIndex: number;
   isUpFocus?: boolean;
   index: number;
+  alwaysVisible?: boolean;
 }
 
-export const Card: FC<ICard> = ({ bottomCards, deepIndex, isUpFocus, index }) => {
+export const Card: FC<ICard> = ({ bottomCards, deepIndex, isUpFocus, index, alwaysVisible }) => {
   const currCard = bottomCards[0];
   const dispatch = useAppDispatch();
+  const isFreeMode = useAppSelector(s => s.cards.isFreeMode);
   const [isFoucs, focusAttr] = useCardFocus(bottomCards, index);
   const isRemoved = useAnimation({
     isStart: currCard.removed,
@@ -32,13 +34,13 @@ export const Card: FC<ICard> = ({ bottomCards, deepIndex, isUpFocus, index }) =>
 
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
     id: currCard.key,
-    disabled: !isValidStack(bottomCards),
+    disabled: !(isFreeMode || isValidStack(bottomCards)),
   });
 
-  const classNames = clx(css.card__wrapper, isDragging && css.card__dragging);
+  const classNames = clx(css.card__wrapper, !alwaysVisible && isDragging && css.card__dragging);
   const isDeep = { "--is-card-deep": +!!deepIndex } as object;
 
-  const border = deepIndex && css.card_border;
+  const border = (alwaysVisible || deepIndex) && css.card_border;
   const foucsStyle = (isFoucs || isUpFocus) && css.card_focus;
 
   return (

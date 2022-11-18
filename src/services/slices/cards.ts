@@ -12,16 +12,18 @@ interface IStats {
 
 interface SelectState {
   cards: TGrid | null;
+  isFreeMode: boolean;
   dragCards: TCell | null;
   snapshots: TGrid[];
   statsSnapshots: IStats[];
-  dragId: string | number | null;
+  dragId: number | null;
   stats: IStats;
 }
 
 const initialState: SelectState = {
   // prettier-ignore
   cards: mockCards,
+  isFreeMode: false,
   dragCards: null,
   dragId: null,
   snapshots: [],
@@ -37,7 +39,10 @@ export const cardSlice = createSlice({
   name: "cards",
   initialState,
   reducers: {
-    setCards(state, action: PayloadAction<TGrid>) {
+    setDragMode(state, action: PayloadAction<boolean>) {
+      state.isFreeMode = action.payload;
+    },
+    setCards(state, action: PayloadAction<TGrid | null>) {
       state.cards = action.payload;
     },
     removeCards(state, action: PayloadAction<number[]>) {
@@ -60,26 +65,30 @@ export const cardSlice = createSlice({
     },
 
     moveCards(state, action: PayloadAction<number>) {
-      const toCell = state.cards?.[action.payload];
-      if (!state.dragCards || !toCell) return;
-      const isValidMove = !toCell.length || isValidStack([toCell[toCell.length - 1], ...state.dragCards]);
+      const toIndex = action.payload;
+      const fromIndex = state.dragId; //? -1 if card not form {cards} (from constructor for example)
+      const toCell = state.cards?.[toIndex];
 
+      //? ts checks it have to be valid state
+      if (fromIndex === null || toCell === undefined || !state.dragCards) return;
+
+      const isValidMove = state.isFreeMode || !toCell.length || isValidStack([toCell[toCell.length - 1], ...state.dragCards]);
       if (!isValidMove) {
         state.snapshots?.pop();
         state.statsSnapshots?.pop();
         return;
       }
 
-      const fromCardIndex = state.cards?.[+(state.dragId || 0)].findIndex(card => card.key === state.dragCards?.[0].key);
-      if (state.dragId === null || fromCardIndex === undefined) return;
-      //? set new cards to place
-      state.cards?.[+state.dragId].splice(fromCardIndex);
+      const fromCardIndex = state.cards?.[+(fromIndex || 0)]?.findIndex(card => card.key === state.dragCards?.[0].key);
+
+      if (fromCardIndex !== undefined) state.cards?.[+fromIndex].splice(fromCardIndex);
       state.cards?.splice(action.payload, 1, [...toCell, ...state.dragCards]);
 
       //? update stats
+      if (state.isFreeMode) return;
       state.stats.drops += +!toCell.length;
       state.stats.steps++;
-      state.stats.length += Math.abs(+state.dragId - action.payload);
+      state.stats.length += Math.abs(+fromIndex - toIndex);
     },
     clearDrag(state) {
       state.dragCards = null;
@@ -100,7 +109,16 @@ export const cardSlice = createSlice({
   },
 });
 
-export const { setCards, setDragCards, clearDrag, storeSnapshot, restoreSnapshot, moveCards, checkFullStacks, removeCards } =
-  cardSlice.actions;
+export const {
+  setCards,
+  setDragCards,
+  clearDrag,
+  storeSnapshot,
+  restoreSnapshot,
+  moveCards,
+  checkFullStacks,
+  removeCards,
+  setDragMode,
+} = cardSlice.actions;
 
 export const cardReducer = cardSlice.reducer;

@@ -1,0 +1,10 @@
+.header {
+  width: 40%;
+  margin-left: auto;
+}
+
+.main {
+  display: flex;
+  gap: 120px;
+  margin-top: 35px;
+}

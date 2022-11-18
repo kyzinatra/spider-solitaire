@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React, { FC } from "react";
 import { clx } from "../../../utils/clx";
 
@@ -6,7 +7,8 @@ import css from "../NavLink/NavLink.module.css";
 interface INavButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
 export const NavButton: FC<INavButton> = ({ children, className, ...props }) => {
-  if (typeof window != "undefined" && window.location.pathname !== "/") {
+  const router = useRouter();
+  if (router.pathname !== "/" && router.pathname !== "/constructor") {
     return null;
   }
 

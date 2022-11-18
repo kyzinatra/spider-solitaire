@@ -1,9 +1,9 @@
 .stats {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   list-style: none;
   width: 100%;
   margin: 0;
   padding: 0;
-  flex-shrink: 2;
+  flex-shrink: 3;
 }
