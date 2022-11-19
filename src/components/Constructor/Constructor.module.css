@@ -1,3 +1,28 @@
 .constructor-class {
-  height: calc((var(--card-gap) + 3px) * 12 + var(--card-height));
+  position: relative;
+  height: calc(var(--constructor-length) * var(--card-gap) + var(--card-height));
+  width: var(--card-width);
+  flex-shrink: 0;
+}
+
+.constructor__nav {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.constructor__nav li {
+  width: 100%;
+}
+
+.constructor__button {
+  margin-top: 20px;
+  width: 100%;
+  font-size: 0.8rem;
+  padding: 10px 5px;
 }

@@ -18,27 +18,30 @@ interface ICard {
   isUpFocus?: boolean;
   index: number;
   alwaysVisible?: boolean;
+  className?: string;
 }
 
-export const Card: FC<ICard> = ({ bottomCards, deepIndex, isUpFocus, index, alwaysVisible }) => {
+export const Card: FC<ICard> = ({ bottomCards, deepIndex, isUpFocus, index, alwaysVisible, className }) => {
   const currCard = bottomCards[0];
+
   const dispatch = useAppDispatch();
   const isFreeMode = useAppSelector(s => s.cards.isFreeMode);
+
   const [isFoucs, focusAttr] = useCardFocus(bottomCards, index);
+
   const isRemoved = useAnimation({
     isStart: currCard.removed,
     onAnimEnd: () => {
       dispatch(removeCards([index, deepIndex]));
     },
   });
-
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
     id: currCard.key,
     disabled: !(isFreeMode || isValidStack(bottomCards)),
   });
 
-  const classNames = clx(css.card__wrapper, !alwaysVisible && isDragging && css.card__dragging);
-  const isDeep = { "--is-card-deep": +!!deepIndex } as object;
+  const classNames = clx(css.card__wrapper, !alwaysVisible && isDragging && css.card__dragging, className);
+  const isDeep = { "--is-card-deep": +!!deepIndex, "--card-index": index } as object;
 
   const border = (alwaysVisible || deepIndex) && css.card_border;
   const foucsStyle = (isFoucs || isUpFocus) && css.card_focus;

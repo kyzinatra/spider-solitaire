@@ -1,0 +1,42 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.form__login {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  border: 0;
+  gap: 30px;
+}
+
+.form__reset {
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  margin-top: -10px;
+}
+.form__reset:hover {
+  text-decoration: underline;
+}
+
+.form__buttons {
+  display: flex;
+  gap: 50px;
+}
+
+.form__buttons button {
+  width: 100%;
+}
+
+.form__title {
+  color: var(--main-color);
+  margin-bottom: 20px;
+}
+
+.form__providers {
+  display: flex;
+  justify-content: space-around;
+}

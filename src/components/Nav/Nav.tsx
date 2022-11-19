@@ -27,7 +27,7 @@ export const Nav: FC = () => {
         <NavLink href="/top">
           <Image src="/stars.svg" width={30} height={30} alt="Рекорды" />
         </NavLink>
-        <NavLink href="/profile">
+        <NavLink href="/login">
           <Image src="/profile.svg" width={30} height={30} alt="Профиль" />
         </NavLink>
         <NavButton onClick={() => dispacth(restoreSnapshot())}>

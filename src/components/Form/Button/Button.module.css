@@ -1,0 +1,58 @@
+.button {
+  display: block;
+  border-radius: var(--border-radius);
+  background: linear-gradient(145deg, #fbffff, #d4dae1);
+  box-shadow: 6px 6px 12px #cad0d7, -6px -6px 12px #ffffff;
+  border: none;
+  padding: 5px 5px;
+  cursor: pointer;
+  color: var(--text-color_dark);
+  text-decoration: none;
+}
+
+.button img {
+  display: block;
+}
+
+.button:hover {
+  background: #ebf2fa;
+}
+
+.button:active {
+  background: linear-gradient(145deg, #d4dae1, #fbffff);
+}
+
+@media (prefers-color-scheme: dark) {
+  .button {
+    background: linear-gradient(145deg, #10434e, #0e3942);
+    box-shadow: 6px 6px 12px #0d363f, -6px -6px 12px #114853;
+    color: var(--text-color);
+  }
+  .button img {
+    filter: invert(1);
+  }
+  .button_invs img {
+    filter: none;
+  }
+  .button:hover {
+    background: #0f3f49;
+    box-shadow: 6px 6px 12px #0d363f, -6px -6px 12px #114853;
+  }
+
+  .button:active {
+    background: linear-gradient(145deg, #0e3942, #10434e);
+    box-shadow: 6px 6px 12px #0d363f, -6px -6px 12px #114853;
+  }
+}
+
+.button_button {
+  padding: 10px 30px;
+}
+
+.button_invs,
+.button_invs:active,
+.button_invs:hover {
+  background: none;
+  box-shadow: none;
+  padding: 0;
+}

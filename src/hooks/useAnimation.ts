@@ -7,7 +7,7 @@ interface IUseAnimation {
   onAnimStart?: () => void;
 }
 
-export function useAnimation({ isStart, duration = 300, onAnimEnd, onAnimStart }: IUseAnimation): boolean {
+export function useAnimation({ isStart, duration = 90, onAnimEnd, onAnimStart }: IUseAnimation): boolean {
   const [isAnimStart, setAnim] = useState<boolean | undefined>(isStart);
   useEffect(() => {
     if (!isStart) return setAnim(false);

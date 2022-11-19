@@ -11,22 +11,21 @@ interface ICardWrapper {
   cell: TCell;
   index: number;
   isUpFocus?: boolean;
-  isConstructor?: boolean;
 }
 
-export const CardWrapper: FC<ICardWrapper> = ({ cell, index, isUpFocus, isConstructor }) => {
-  const cssVars = { "--cell-length": cell.length - 1, "--card-index": (isConstructor && index) || 0 } as object;
+export const CardWrapper: FC<ICardWrapper> = ({ cell, index, isUpFocus }) => {
+  const cssVars = { "--cell-length": cell.length - 1 } as object;
   const dragId = useAppSelector(s => s.cards.dragId);
   // prettier-ignore
   const { setNodeRef, over, isOver: isElOver } = useDroppable({id: index});
-  const isOver = over?.id !== dragId && !isConstructor && isElOver;
-  const wraperrClass = clx(css.wrapper, isOver && css.wrapper__over, isConstructor && css.wraperr_constructor);
+  const isOver = over?.id !== dragId && isElOver;
+  const wraperrClass = clx(css.wrapper, isOver && css.wrapper__over, css.wraperr_constructor);
 
   return (
     <>
       {cell.length ? (
         <div className={wraperrClass} style={cssVars} ref={setNodeRef}>
-          <Card alwaysVisible={isConstructor} isUpFocus={isUpFocus} bottomCards={cell} deepIndex={0} index={index} />
+          <Card isUpFocus={isUpFocus} bottomCards={cell} deepIndex={0} index={index} />
         </div>
       ) : (
         <EmptyCard ref={setNodeRef} isOver={isOver} />

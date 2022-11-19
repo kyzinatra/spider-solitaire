@@ -1,0 +1,16 @@
+@media (prefers-color-scheme: dark) {
+  .input {
+    border: 3px solid var(--border-color_dark);
+    border-radius: var(--border-radius);
+    background: none;
+    color: var(--main-color);
+    font-family: inherit;
+    font-size: 1.2rem;
+    padding: 15px 10px;
+    min-width: 310px;
+  }
+
+  .input::placeholder {
+    color: var(--main-color);
+  }
+}

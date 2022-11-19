@@ -1,7 +1,17 @@
 import React from "react";
+import { LoginForm } from "../../components/Form/LoginForm/LoginForm";
+import { Layout } from "../../components/Layout/Layout";
+
+import css from "./login.module.css";
 
 function Login() {
-  return <div>Login</div>;
+  return (
+    <Layout title="Вход">
+      <main className={css.login}>
+        <LoginForm />
+      </main>
+    </Layout>
+  );
 }
 
 export default Login;

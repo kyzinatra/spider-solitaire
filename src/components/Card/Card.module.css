@@ -51,7 +51,7 @@
 
 .card__removed {
   opacity: 0;
-  transition: opacity 0.3s linear;
+  transition: opacity 0.1s linear;
 }
 
 @media (prefers-color-scheme: dark) {

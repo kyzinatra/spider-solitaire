@@ -1,6 +1,5 @@
 .wrapper {
   position: relative;
-  top: calc(var(--card-index) * -1 * var(--card-height) + var(--card-index) * (var(--card-gap) + 3px));
   transition: box-shadow 0.1s linear;
   border-radius: calc(var(--border-radius) + 2px);
   height: calc(var(--cell-length) * var(--card-gap) + var(--card-height));

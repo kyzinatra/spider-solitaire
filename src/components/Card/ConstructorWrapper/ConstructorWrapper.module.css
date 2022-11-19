@@ -1,0 +1,4 @@
+.constructor__cards {
+  position: absolute;
+  top: calc(var(--card-index) * var(--card-gap));
+}
