@@ -83,10 +83,10 @@ export const LoginForm: FC = ({}) => {
       </div>
       <div className={css.form__providers}>
         <Button styleType="invs" type="button" onClick={GoogleSingIn}>
-          <Image src="/google.webp" width="60" height="60" alt="Google login" />
+          <Image src="/google.svg" width="60" height="60" alt="Google login" />
         </Button>
         <Button styleType="invs" type="button" onClick={GitHubSingIn}>
-          <Image src="/github.webp" width="60" height="60" alt="Github login" />
+          <Image src="/github.svg" width="60" height="60" alt="Github login" />
         </Button>
       </div>
     </form>
