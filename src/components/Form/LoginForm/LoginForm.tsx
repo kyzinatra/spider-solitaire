@@ -11,18 +11,22 @@ import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-
-import css from "./LoginForm.module.css";
-import { ILoginForm } from "../../../types/user";
 import { auth } from "../../../../firebase.config";
+
+import css from "../Form.module.css";
+
+import { ILoginForm } from "../../../types/user";
+import { LoginError } from "../../../types/errors";
+
 import { useSingInWithProvider } from "../../../hooks/useSingInWithProvider";
 import { NOT_FOUND } from "../../../constants/auth";
-import { LoginError } from "../../../types/errors";
+import { useToast } from "../../../hooks/useToast";
 
 export const LoginForm: FC = ({}) => {
   const router = useRouter();
   const [loginForm, setLoginForm] = useState<ILoginForm>({ password: "", email: "" });
-
+  const [isLoading, setLoading] = useState(false);
+  const addToast = useToast();
   const GoogleSingIn = useSingInWithProvider(new GoogleAuthProvider());
   const GitHubSingIn = useSingInWithProvider(new GithubAuthProvider());
 
@@ -31,6 +35,7 @@ export const LoginForm: FC = ({}) => {
   }, []);
 
   function submitHandler(e: FormEvent) {
+    setLoading(true);
     e.preventDefault();
     const { email, password } = loginForm;
 
@@ -39,9 +44,14 @@ export const LoginForm: FC = ({}) => {
         if (e.code.includes(NOT_FOUND)) {
           return createUserWithEmailAndPassword(auth, email, password);
         }
+        throw Error(e.code);
       })
       .then(() => router.push("/"))
-      .catch(e => {});
+      .catch(e => {
+        addToast(e.message, "error");
+        setLoginForm(f => ({ ...f, password: "" }));
+      })
+      .finally(() => setLoading(false));
   }
 
   return (
@@ -51,12 +61,14 @@ export const LoginForm: FC = ({}) => {
         <Input
           placeholder="Почта"
           type="email"
+          required
           value={loginForm.email}
           onChange={e => setLoginForm(f => ({ ...f, email: e.target.value }))}
         />
         <Input
           placeholder="Пароль"
           type="password"
+          required
           value={loginForm.password}
           onChange={e => setLoginForm(f => ({ ...f, password: e.target.value }))}
         />
@@ -65,8 +77,8 @@ export const LoginForm: FC = ({}) => {
         </Link>
       </fieldset>
       <div className={css.form__buttons}>
-        <Button styleType="button" type="submit">
-          Войти
+        <Button styleType="button" type="submit" disabled={isLoading}>
+          {isLoading ? "Входим..." : "Войти"}
         </Button>
       </div>
       <div className={css.form__providers}>

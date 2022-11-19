@@ -25,6 +25,12 @@
   --scroll-radius:          10px;
 
   --font-size:              18px;
+
+
+  --error-color:            #bc2727;
+  --warning-color:          #d96200;
+  --info-color:             #006faa;
+  --success-color:          #2b742e;
 }
 
 #__next {

@@ -1,12 +1,13 @@
 import { onAuthStateChanged } from "firebase/auth";
 import Head from "next/head";
 import React, { FC, PropsWithChildren, useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { auth } from "../../../firebase.config";
+import { useAppDispatch } from "../../services";
 import { setUser } from "../../services/slices/user";
+import Toasts from "../Toasts/Toasts";
 
 export const Layout: FC<PropsWithChildren<{ title?: string }>> = ({ children, title }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   useEffect(() => {
     onAuthStateChanged(auth, user => {
       dispatch(
@@ -36,6 +37,7 @@ export const Layout: FC<PropsWithChildren<{ title?: string }>> = ({ children, ti
         <link rel="shortcut icon" href="favicon.png" type="image/png" />
       </Head>
       {children}
+      <Toasts />
     </>
   );
 };

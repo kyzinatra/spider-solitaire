@@ -1,0 +1,48 @@
+.toast {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: var(--border-radius);
+
+  padding: 10px 15px;
+  left: calc(-100% - var(--left-pad));
+  animation: inAnim 0.2s ease-in forwards;
+  cursor: pointer;
+}
+
+.toast_error {
+  background-color: var(--error-color);
+}
+
+.toast_info {
+  background-color: var(--info-color);
+}
+
+.toast_warning {
+  background-color: var(--warning-color);
+}
+
+.toast_success {
+  background-color: var(--success-color);
+}
+
+.toast__code {
+  margin: 0;
+  padding: 0;
+}
+
+.toast__reason {
+  max-width: 450px;
+  margin-right: 20px;
+  display: inline-block;
+}
+
+.toast__img {
+  margin-right: 20px;
+}
+
+@keyframes inAnim {
+  100% {
+    left: var(--left-pad);
+  }
+}

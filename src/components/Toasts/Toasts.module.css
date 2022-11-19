@@ -1,0 +1,10 @@
+.toasts {
+  --left-pad: 10px;
+  position: absolute;
+  bottom: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  left: var(--left-pad);
+  color: var(--main-color);
+}
