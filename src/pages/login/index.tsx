@@ -6,7 +6,7 @@ import css from "./login.module.css";
 
 function Login() {
   return (
-    <Layout title="Вход">
+    <Layout title="Вход" onlyАnonym>
       <main className={css.login}>
         <LoginForm />
       </main>

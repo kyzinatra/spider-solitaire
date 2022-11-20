@@ -7,7 +7,7 @@ export function useToast(timeout: number = TIMEOUT) {
   const dispatch = useAppDispatch();
 
   function addToastHandler(message: string, type?: TToast["type"], code?: TToast["code"]) {
-    let newId = uuid();
+    const newId = uuid();
     dispatch(
       addToast({
         id: newId,

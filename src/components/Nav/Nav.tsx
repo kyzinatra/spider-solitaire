@@ -5,12 +5,13 @@ import Image from "next/image";
 
 import css from "./Nav.module.css";
 
-import { useAppDispatch } from "../../services";
+import { useAppDispatch, useAppSelector } from "../../services";
 import { restoreSnapshot } from "../../services/slices/cards";
 import { NavButton } from "./NavButton/NavButton";
 
 export const Nav: FC = () => {
   const dispacth = useAppDispatch();
+  const isAuth = useAppSelector(s => s.user.isAuth);
 
   return (
     <nav className={clx(css.nav)}>
@@ -24,10 +25,10 @@ export const Nav: FC = () => {
         <NavLink href="/constructor">
           <Image src="/build.svg" width={30} height={30} alt="Конструктор" />
         </NavLink>
-        <NavLink href="/top">
+        <NavLink href="/records">
           <Image src="/stars.svg" width={30} height={30} alt="Рекорды" />
         </NavLink>
-        <NavLink href="/login">
+        <NavLink href={isAuth ? "/profile" : "/login"}>
           <Image src="/profile.svg" width={30} height={30} alt="Профиль" />
         </NavLink>
         <NavButton onClick={() => dispacth(restoreSnapshot())}>

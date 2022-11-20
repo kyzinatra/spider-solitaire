@@ -17,7 +17,7 @@ const Context: FC<PropsWithChildren<IContext>> = ({ children, cards }) => {
 
   function dragStartHandler(event: DragStartEvent) {
     //? get draggable cards by active id. And put it to redux.
-    let dragCards = getStackById(cards || [], event.active.id);
+    const dragCards = getStackById(cards || [], event.active.id);
 
     if (!dragCards) return;
     dispatch(setDragCards(dragCards));

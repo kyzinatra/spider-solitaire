@@ -1,0 +1,6 @@
+.email {
+  color: var(--main-color);
+  background-color: var(--error-color);
+  padding: 15px 20px;
+  border-radius: var(--border-radius);
+}

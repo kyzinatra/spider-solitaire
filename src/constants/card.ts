@@ -23,7 +23,7 @@ export const mockCards: TGrid = [
     { title: "A", key: "1" },
     { title: "K", key: "2" },
     { title: "Q", key: "3" },
-    { title: "V", key: "3" },
+    { title: "V", key: "3льль" },
     { title: "10", key: "5" },
     { title: "9", key: "6" },
     { title: "8", key: "7A" },
