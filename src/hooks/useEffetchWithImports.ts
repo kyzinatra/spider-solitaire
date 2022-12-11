@@ -11,18 +11,15 @@ export function useEffectWithImports<T extends Import[] | []>(
   imports: () => T,
   deps?: DependencyList
 ) {
-  const resolveRef = useRef(resolve);
-  const importsRef = useRef(imports);
   const toast = useToast();
-  resolveRef.current = resolve;
-  importsRef.current = imports;
 
   useEffect(() => {
     let isMounted = true;
-    const promises = importsRef.current();
+
+    const promises = imports();
     Promise.all(promises)
       .then(res => {
-        if (isMounted) resolveRef.current(res);
+        if (isMounted) resolve(res);
       })
       .catch(e => {
         toast(e.message, "error", e.code);

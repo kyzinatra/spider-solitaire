@@ -25,6 +25,7 @@ const Profile = () => {
       }
     );
   }
+
   let lastDateFormted: string | undefined;
   if (lastSingInTime)
     lastDateFormted = new Intl.DateTimeFormat("ru", {
