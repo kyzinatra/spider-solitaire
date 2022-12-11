@@ -5,11 +5,13 @@ import { clx } from "../../../utils/clx";
 
 import css from "../../Form/Button/Button.module.css";
 
-interface INavLink extends React.AnchorHTMLAttributes<HTMLAnchorElement> {}
+interface INavLink extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+  shouldRender?: boolean;
+}
 
-export const NavLink: FC<PropsWithChildren<INavLink>> = ({ children, className, href, ...props }) => {
+export const NavLink: FC<PropsWithChildren<INavLink>> = ({ children, className, href, shouldRender = true, ...props }) => {
   const isMatch = usePageMatch(href || "/");
-  if (isMatch) return null;
+  if (isMatch || !shouldRender) return null;
 
   return (
     <li>

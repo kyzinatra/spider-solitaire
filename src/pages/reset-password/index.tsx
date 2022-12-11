@@ -7,7 +7,7 @@ import css from "./reset.module.css";
 
 const Reset = () => {
   return (
-    <Layout title="Восстановление пароля" onlyАnonym>
+    <Layout title="Восстановление пароля" onlyAnonym>
       <main className={css.reset}>
         <ResetForm />
       </main>

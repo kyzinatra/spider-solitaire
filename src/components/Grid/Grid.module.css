@@ -3,7 +3,7 @@
   width: 100%;
   grid-auto-rows: max-content;
   grid-template-columns: repeat(auto-fit, var(--card-width));
-  align-items: start;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 40px;
   font-size: 1rem;

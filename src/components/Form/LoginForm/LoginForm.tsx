@@ -5,53 +5,66 @@ import { Input } from "../Input/Input";
 import Image from "next/image";
 import Link from "next/link";
 
-import {
-  createUserWithEmailAndPassword,
-  GithubAuthProvider,
-  GoogleAuthProvider,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-import { auth } from "../../../../firebase.config";
-
 import css from "../Form.module.css";
 
 import { ILoginForm } from "../../../types/user";
 import { LoginError } from "../../../types/errors";
 
-import { useSingInWithProvider } from "../../../hooks/useSingInWithProvider";
-import { NOT_FOUND } from "../../../constants/auth";
+import { GITHUB_PROVIDER, GOOGLE_PROVIDER, NOT_FOUND } from "../../../constants/auth";
 import { useToast } from "../../../hooks/useToast";
+import { ImportAync } from "../../../hooks/useEffetchWithImports";
 
 export const LoginForm: FC = ({}) => {
   const router = useRouter();
   const [loginForm, setLoginForm] = useState<ILoginForm>({ password: "", email: "" });
   const [isLoading, setLoading] = useState(false);
   const addToast = useToast();
-  const GoogleSingIn = useSingInWithProvider(new GoogleAuthProvider());
-  const GitHubSingIn = useSingInWithProvider(new GithubAuthProvider());
 
   useEffect(() => {
     router.prefetch("/");
-  }, []);
+  }, [router]);
+
+  function providerHandler(type: typeof GITHUB_PROVIDER | typeof GOOGLE_PROVIDER) {
+    //? Import libs and emmit handler
+    ImportAync(
+      [import("firebase/auth"), import("../../../../firebase.config")],
+      ([{ signInWithPopup, GoogleAuthProvider, GithubAuthProvider }, { auth }]) => {
+        const providers = {
+          [GITHUB_PROVIDER]: new GithubAuthProvider(),
+          [GOOGLE_PROVIDER]: new GoogleAuthProvider(),
+        };
+
+        signInWithPopup(auth, providers[type])
+          .then(res => {
+            router.push("/");
+          })
+          .catch(e => addToast(e.code, "error"));
+      }
+    );
+  }
 
   function submitHandler(e: FormEvent) {
     setLoading(true);
     e.preventDefault();
     const { email, password } = loginForm;
-
-    signInWithEmailAndPassword(auth, email, password)
-      .catch((e: LoginError) => {
-        if (e.code.includes(NOT_FOUND)) {
-          return createUserWithEmailAndPassword(auth, email, password);
-        }
-        throw Error(e.code);
-      })
-      .then(() => router.push("/"))
-      .catch(e => {
-        addToast(e.message, "error");
-        setLoginForm(f => ({ ...f, password: "" }));
-      })
-      .finally(() => setLoading(false));
+    ImportAync(
+      [import("firebase/auth"), import("../../../../firebase.config")],
+      ([{ signInWithEmailAndPassword, createUserWithEmailAndPassword }, { auth }]) => {
+        signInWithEmailAndPassword(auth, email, password)
+          .catch((e: LoginError) => {
+            if (e.code.includes(NOT_FOUND)) {
+              return createUserWithEmailAndPassword(auth, email, password);
+            }
+            throw Error(e.code);
+          })
+          .then(() => router.push("/"))
+          .catch(e => {
+            addToast(e.message, "error");
+            setLoginForm(f => ({ ...f, password: "" }));
+          })
+          .finally(() => setLoading(false));
+      }
+    );
   }
 
   return (
@@ -82,11 +95,11 @@ export const LoginForm: FC = ({}) => {
         </Button>
       </div>
       <div className={css.form__providers}>
-        <Button styleType="invs" type="button" onClick={GoogleSingIn}>
-          <Image src="/google.svg" width="60" height="60" alt="Google login" />
+        <Button styleType="invs" type="button" onClick={() => providerHandler(GOOGLE_PROVIDER)}>
+          <Image src="/google.svg" width="40" height="40" alt="Google login" />
         </Button>
-        <Button styleType="invs" type="button" onClick={GitHubSingIn}>
-          <Image src="/github.svg" width="60" height="60" alt="Github login" />
+        <Button styleType="invs" type="button" onClick={() => providerHandler(GITHUB_PROVIDER)}>
+          <Image src="/github.svg" width="40" height="40" alt="Github login" />
         </Button>
       </div>
     </form>

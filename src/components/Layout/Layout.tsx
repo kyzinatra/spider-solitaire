@@ -1,8 +1,7 @@
-import { onAuthStateChanged } from "firebase/auth";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { FC, PropsWithChildren, useEffect, useState } from "react";
-import { auth } from "../../../firebase.config";
+import { useEffectWithImports } from "../../hooks/useEffetchWithImports";
 import { useAppDispatch } from "../../services";
 import { setUser } from "../../services/slices/user";
 import Toasts from "../Toasts/Toasts";
@@ -10,29 +9,38 @@ import Toasts from "../Toasts/Toasts";
 interface ILayout {
   title?: string;
   onlyAuth?: boolean;
-  onlyАnonym?: boolean;
+  onlyAnonym?: boolean;
 }
 
-export const Layout: FC<PropsWithChildren<ILayout>> = ({ children, title, onlyAuth, onlyАnonym }) => {
+export const Layout: FC<PropsWithChildren<ILayout>> = ({
+  children,
+  title,
+  onlyAuth,
+  onlyAnonym,
+}) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const [isAuth, setAuth] = useState<undefined | boolean>();
-  useEffect(() => {
-    onAuthStateChanged(auth, user => {
-      setAuth(!!user?.uid);
-      dispatch(
-        setUser({
-          email: user?.email,
-          isAuth: !!user?.uid,
-          uid: user?.uid,
-          isEmailVerified: user?.emailVerified,
-          provider: user?.providerId,
-          creationTime: user?.metadata.creationTime,
-          lastSingInTime: user?.metadata.lastSignInTime,
-        })
-      );
-    });
-  }, []);
+  useEffectWithImports(
+    ([{ onAuthStateChanged }, { auth }]) => {
+      onAuthStateChanged(auth, user => {
+        setAuth(!!user?.uid);
+        dispatch(
+          setUser({
+            email: user?.email,
+            isAuth: !!user?.uid,
+            uid: user?.uid,
+            isEmailVerified: user?.emailVerified,
+            provider: user?.providerId,
+            creationTime: user?.metadata.creationTime,
+            lastSingInTime: user?.metadata.lastSignInTime,
+          })
+        );
+      });
+    },
+    () => [import("firebase/auth"), import("../../../firebase.config")],
+    [dispatch]
+  );
 
   let renderItem: React.ReactNode | undefined;
 
@@ -41,12 +49,12 @@ export const Layout: FC<PropsWithChildren<ILayout>> = ({ children, title, onlyAu
     if (isAuth === true) renderItem = children;
   }
 
-  if (onlyАnonym) {
+  if (onlyAnonym) {
     if (isAuth === true) router.push("/");
     if (isAuth === false) renderItem = children;
   }
 
-  if (!onlyAuth && !onlyАnonym) renderItem = children;
+  if (!onlyAuth && !onlyAnonym) renderItem = children;
 
   return (
     <>

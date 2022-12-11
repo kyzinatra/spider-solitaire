@@ -13,6 +13,7 @@ import { TGrid } from "../../types/card";
 import css from "./constructor.module.css";
 import { useState } from "react";
 import { getNewConstructorCards } from "../../utils/getNewCards";
+import { ConstructorNav } from "../../components/Constructor/ConstructorNav/ConstructorNav";
 
 function ConstructorPage() {
   const dispatch = useAppDispatch();
@@ -26,19 +27,22 @@ function ConstructorPage() {
 
   useEffect(() => {
     dispatch(setDragMode(true));
-    dispatch(setCards([[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []]));
-  }, []);
+    dispatch(setCards([]));
+  }, [dispatch]);
 
   return (
-    <Layout title="Конструктор">
+    <Layout title="Конструктор" onlyAuth>
       <header className={css.header}>
+        <ConstructorNav />
         <Nav />
       </header>
       <main className={css.main}>
         <Context cards={[...(cards || []), ...allCards]}>
           <Constructor cards={allCards} />
           <Grid />
-          <DragOverlay>{dragCards && <CardWrapper isUpFocus index={0} cell={dragCards} />}</DragOverlay>
+          <DragOverlay>
+            {dragCards && <CardWrapper isUpFocus index={0} cell={dragCards} />}
+          </DragOverlay>
         </Context>
       </main>
     </Layout>

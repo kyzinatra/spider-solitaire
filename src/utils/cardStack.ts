@@ -13,7 +13,7 @@ export function hasFullStack(cell: TCell): number {
   let res = -1;
   cell.forEach((card, i) => {
     if (CARD_VALUES[card.title] === MAX_CARD_VALUE - stackCount) stackCount += 1;
-    else return (stackCount = 0);
+    else return (stackCount = +(CARD_VALUES[card.title] === MAX_CARD_VALUE));
     if (stackCount === MAX_CARD_VALUE + 1) return (res = i - MAX_CARD_VALUE);
   });
   return res;

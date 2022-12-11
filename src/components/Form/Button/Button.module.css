@@ -8,6 +8,7 @@
   cursor: pointer;
   color: var(--text-color_dark);
   text-decoration: none;
+  text-align: center;
 }
 
 .button img {

@@ -1,7 +1,6 @@
-import { sendEmailVerification } from "firebase/auth";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { auth } from "../../../../firebase.config";
+import { ImportAync } from "../../../hooks/useEffetchWithImports";
 import { useToast } from "../../../hooks/useToast";
 import { useAppSelector } from "../../../services";
 import { Button } from "../../Form/Button/Button";
@@ -15,16 +14,21 @@ export const EmailVerify = () => {
   const router = useRouter();
   const addToast = useToast();
   function sendMail() {
-    const user = auth.currentUser;
-    if (!user) return router.push("/login");
-    setLoading(true);
+    ImportAync(
+      [import("firebase/auth"), import("../../../../firebase.config")],
+      ([{ sendEmailVerification }, { auth }]) => {
+        const user = auth.currentUser;
+        if (!user) return router.push("/login");
+        setLoading(true);
 
-    sendEmailVerification(user)
-      .then(
-        () => addToast("Письмо отправлено!", "success"),
-        e => addToast(e.code, "error")
-      )
-      .finally(() => setLoading(false));
+        sendEmailVerification(user)
+          .then(
+            () => addToast("Письмо отправлено!", "success"),
+            e => addToast(e.code, "error")
+          )
+          .finally(() => setLoading(false));
+      }
+    );
   }
 
   if (isVerify) return null;

@@ -13,6 +13,7 @@
   --border-color:         #427aa1;
   --border-color_dark:    #4e7d55;
   --boder-color_contrast: #222222;
+  --modal-background:     rgba(0, 0, 0, 0.5);
 
   --width:                  1320px;
   --border-radius:          8px;

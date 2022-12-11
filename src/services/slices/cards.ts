@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { MAX_CARD_VALUE, mockCards } from "../../constants/card";
+import { MAX_CARD_VALUE } from "../../constants/card";
 import { TCell, TGrid } from "../../types/card";
 import { isValidStack } from "../../utils/isValidStack";
 import { hasFullStack } from "../../utils/cardStack";
@@ -14,6 +14,7 @@ interface SelectState {
   cards: TGrid | null;
   isFreeMode: boolean;
   dragCards: TCell | null;
+  isShowEndModal: boolean;
   snapshots: TGrid[];
   statsSnapshots: IStats[];
   dragId: number | null;
@@ -22,8 +23,9 @@ interface SelectState {
 
 const initialState: SelectState = {
   // prettier-ignore
-  cards: mockCards,
+  cards: [],
   isFreeMode: false,
+  isShowEndModal: false,
   dragCards: null,
   dragId: null,
   snapshots: [],
@@ -45,11 +47,23 @@ export const cardSlice = createSlice({
     setCards(state, action: PayloadAction<TGrid | null>) {
       state.cards = action.payload;
     },
-    removeCards(state, action: PayloadAction<number[]>) {
+    setStats(state, action: PayloadAction<IStats>) {
+      state.stats = action.payload;
+    },
+    closeModal(state) {
+      state.isShowEndModal = false;
+    },
+    setSnapshots(state, action: PayloadAction<TGrid[]>) {
+      state.snapshots = action.payload;
+    },
+    removeCardsInCell(state, action: PayloadAction<number[]>) {
       state.cards?.[action.payload[0]].splice(action.payload[1], 1);
+      state.isShowEndModal = !!state.cards?.every(cell => cell.length === 0);
     },
     setDragCards(state, action: PayloadAction<TCell>) {
-      const dragIndex = state.cards?.findIndex(cell => cell.some(card => card.key === action.payload?.[0].key));
+      const dragIndex = state.cards?.findIndex(cell =>
+        cell.some(card => card.key === action.payload?.[0].key)
+      );
       state.dragCards = action.payload;
       state.dragId = dragIndex !== undefined ? dragIndex : -1;
     },
@@ -72,14 +86,19 @@ export const cardSlice = createSlice({
       //? ts checks it have to be valid state
       if (fromIndex === null || toCell === undefined || !state.dragCards) return;
 
-      const isValidMove = state.isFreeMode || !toCell.length || isValidStack([toCell[toCell.length - 1], ...state.dragCards]);
+      const isValidMove =
+        state.isFreeMode ||
+        !toCell.length ||
+        isValidStack([toCell[toCell.length - 1], ...state.dragCards]);
       if (!isValidMove) {
         state.snapshots?.pop();
         state.statsSnapshots?.pop();
         return;
       }
 
-      const fromCardIndex = state.cards?.[+(fromIndex || 0)]?.findIndex(card => card.key === state.dragCards?.[0].key);
+      const fromCardIndex = state.cards?.[+(fromIndex || 0)]?.findIndex(
+        card => card.key === state.dragCards?.[0].key
+      );
 
       if (fromCardIndex !== undefined) state.cards?.[+fromIndex].splice(fromCardIndex);
       state.cards?.splice(action.payload, 1, [...toCell, ...state.dragCards]);
@@ -117,8 +136,11 @@ export const {
   restoreSnapshot,
   moveCards,
   checkFullStacks,
-  removeCards,
+  removeCardsInCell,
   setDragMode,
+  setSnapshots,
+  setStats,
+  closeModal,
 } = cardSlice.actions;
 
 export const cardReducer = cardSlice.reducer;

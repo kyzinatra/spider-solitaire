@@ -4,15 +4,13 @@ import ReactDOM from "react-dom";
 import css from "./Toasts.module.css";
 import { Toast } from "./Toast/Toast";
 import { useAppSelector } from "../../services";
+import { useMounted } from "../../hooks/useMounted";
 
 function Toasts() {
-  const [mounted, setMounted] = useState(false);
+  const isMounted = useMounted();
   const toastsContent = useAppSelector(s => s.toast);
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
-  if (typeof window === "undefined" || !mounted) {
+  if (typeof window === "undefined" || !isMounted) {
     return null;
   }
 

@@ -9,6 +9,6 @@ export function usePageMatch(path: string) {
       return setMatch(true);
     }
     setMatch(false);
-  }, [path, isMatch]);
+  }, [path, isMatch, router.pathname]);
   return isMatch;
 }

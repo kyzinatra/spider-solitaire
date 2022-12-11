@@ -1,0 +1,8 @@
+.article__title,
+.article__subtitle,
+.article__stats {
+  margin: 15px 0;
+}
+.article__list {
+  padding-left: 1em;
+}

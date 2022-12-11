@@ -10,7 +10,7 @@ import { isValidStack } from "../../utils/isValidStack";
 import css from "./Card.module.css";
 import { useAnimation } from "../../hooks/useAnimation";
 import { useAppDispatch, useAppSelector } from "../../services";
-import { removeCards } from "../../services/slices/cards";
+import { removeCardsInCell } from "../../services/slices/cards";
 
 interface ICard {
   bottomCards: TCell;
@@ -32,7 +32,7 @@ export const Card: FC<ICard> = ({ bottomCards, deepIndex, isUpFocus, index, alwa
   const isRemoved = useAnimation({
     isStart: currCard.removed,
     onAnimEnd: () => {
-      dispatch(removeCards([index, deepIndex]));
+      dispatch(removeCardsInCell([index, deepIndex]));
     },
   });
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
