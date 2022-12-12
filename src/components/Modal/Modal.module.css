@@ -5,6 +5,7 @@
   position: absolute;
   top: 0;
   cursor: pointer;
+  animation: show_overlay 0.1s ease-in forwards;
 }
 
 .modal__wrapper {
@@ -31,6 +32,26 @@
   border-radius: var(--border-radius);
   z-index: 10;
   position: relative;
+  animation: show_modal 0.2s ease-in forwards;
+}
+
+@keyframes show_overlay {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes show_modal {
+  0% {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .modal__times {

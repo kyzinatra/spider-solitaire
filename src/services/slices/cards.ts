@@ -25,7 +25,7 @@ const initialState: SelectState = {
   // prettier-ignore
   cards: [],
   isFreeMode: false,
-  isShowEndModal: false,
+  isShowEndModal: true,
   dragCards: null,
   dragId: null,
   snapshots: [],

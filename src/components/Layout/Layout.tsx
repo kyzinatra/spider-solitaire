@@ -34,12 +34,13 @@ export const Layout: FC<PropsWithChildren<ILayout>> = ({
             provider: user?.providerId,
             creationTime: user?.metadata.creationTime,
             lastSingInTime: user?.metadata.lastSignInTime,
+            displayName: user?.displayName,
           })
         );
       });
     },
     () => [import("firebase/auth"), import("../../../firebase.config")],
-    [dispatch]
+    []
   );
 
   let renderItem: React.ReactNode | undefined;

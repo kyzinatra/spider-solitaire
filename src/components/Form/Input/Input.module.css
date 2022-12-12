@@ -12,5 +12,6 @@
 
   .input::placeholder {
     color: var(--main-color);
+    opacity: 0.6;
   }
 }

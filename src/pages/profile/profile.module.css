@@ -19,11 +19,15 @@
 .main {
   margin-top: 50px;
   color: var(--main-color);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 100px;
 }
 
 .main__title {
   padding: 0;
   font-size: 1.2rem;
+  margin: 0;
 }
 .main__subtitle {
   padding: 0;

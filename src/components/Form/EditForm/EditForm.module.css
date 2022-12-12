@@ -1,0 +1,11 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.form__title {
+  padding: 0;
+  margin: 0;
+  font-size: 1.2rem;
+}

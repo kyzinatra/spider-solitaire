@@ -15,7 +15,6 @@ export function useEffectWithImports<T extends Import[] | []>(
 
   useEffect(() => {
     let isMounted = true;
-
     const promises = imports();
     Promise.all(promises)
       .then(res => {
@@ -28,10 +27,10 @@ export function useEffectWithImports<T extends Import[] | []>(
     return () => {
       isMounted = false;
     };
-  }, [deps]);
+  }, [...(deps || [])]);
 }
 
 export async function ImportAync<T extends Import[] | []>(imports: T, callback: Resolve<T>) {
   const resolve = await Promise.all(imports);
-  callback(resolve);
+  return callback(resolve);
 }

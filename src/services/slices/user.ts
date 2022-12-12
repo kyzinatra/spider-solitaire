@@ -8,6 +8,7 @@ interface UserState {
   provider?: string;
   creationTime?: string;
   lastSingInTime?: string;
+  displayName?: string | null;
 }
 
 const initialState: UserState = {

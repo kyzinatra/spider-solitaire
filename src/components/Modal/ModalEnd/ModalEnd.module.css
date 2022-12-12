@@ -6,3 +6,20 @@
 .article__list {
   padding-left: 1em;
 }
+
+.article {
+  min-width: 30vw;
+  min-height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 1.2rem;
+}
+
+.article__button {
+  box-shadow: none;
+}
+.article__button:hover {
+  box-shadow: none;
+}

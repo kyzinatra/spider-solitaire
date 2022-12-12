@@ -1,4 +1,4 @@
-import admin from "firebase-admin";
+import admin, { database } from "firebase-admin";
 import "firebase-admin/firestore";
 import "firebase-admin/app";
 
@@ -14,7 +14,7 @@ if (!admin.apps.length) {
       type: env.TYPE,
       project_id: env.PROJECT_ID,
       private_key_id: env.PRIVATE_KEY_ID,
-      private_key: env.PRIVATE_KEY,
+      private_key: env.PRIVATE_KEY?.replace(/\\n/gm, "\n"),
       client_email: env.CLIENT_EMAIL,
       client_id: env.CLIENT_ID,
       auth_uri: env.AUTH_URI,
@@ -27,4 +27,5 @@ if (!admin.apps.length) {
 }
 
 export { app };
-export const AdminAuth = getAuth(app);
+export const auth = getAuth(app);
+export const db = database(app);
