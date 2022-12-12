@@ -1,12 +1,5 @@
 import { getAuth } from "firebase/auth";
 import { FirebaseOptions, initializeApp } from "firebase/app";
-import {
-  AppCheck,
-  initializeAppCheck,
-  ReCaptchaV3Provider,
-  setTokenAutoRefreshEnabled,
-} from "firebase/app-check";
-import { getDatabase } from "firebase/database";
 
 const firebaseConfig: FirebaseOptions = {
   apiKey: process.env.NEXT_PUBLIC_KEY,
@@ -20,17 +13,3 @@ const firebaseConfig: FirebaseOptions = {
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-let appCheck: AppCheck;
-if (typeof document !== "undefined") {
-  // @ts-ignore
-  // self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
-  appCheck = initializeAppCheck(app, {
-    provider: new ReCaptchaV3Provider(process.env.NEXT_PUBLIC_CAPTHCA_KEY || ""),
-
-    isTokenAutoRefreshEnabled: true,
-  });
-  setTokenAutoRefreshEnabled(appCheck, true);
-}
-
-export { appCheck };
-export const db = getDatabase(app);

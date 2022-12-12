@@ -6,6 +6,7 @@ const nextConfig = {
     locales: ["ru"],
     defaultLocale: "ru",
   },
+  compress: true,
 };
 
 module.exports = nextConfig;

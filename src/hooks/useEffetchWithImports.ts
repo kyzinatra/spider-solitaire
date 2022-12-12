@@ -28,7 +28,7 @@ export function useEffectWithImports<T extends Import[] | []>(
     return () => {
       isMounted = false;
     };
-  }, [...(deps || []), toast]);
+  }, [deps]);
 }
 
 export async function ImportAync<T extends Import[] | []>(imports: T, callback: Resolve<T>) {
