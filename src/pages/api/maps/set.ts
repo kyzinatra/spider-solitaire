@@ -29,6 +29,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       res.status(400).json({ success: false, message: "Что-то пошло не так..." });
     }
   } catch (e) {
-    res.status(400).json({ success: false, message: (e as Error).message || "Что-то пошло не так..." });
+    res
+      .status(400)
+      .json({ success: false, message: (e as Error).message || "Что-то пошло не так..." });
   }
 }

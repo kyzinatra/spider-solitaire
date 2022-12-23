@@ -7,4 +7,5 @@
   gap: 15px;
   left: var(--left-pad);
   color: var(--main-color);
+  z-index: 9999;
 }
