@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { LOCAL_CARDS } from "../../../constants/card";
+import { CREATOR, LOCAL_CARDS, MAPID } from "../../../constants/card";
 import { ImportAync } from "../../../hooks/useEffetchWithImports";
 import { useToast } from "../../../hooks/useToast";
 import { TSimpleResponse } from "../../../pages/api/maps/set";
@@ -11,7 +11,8 @@ import { Button } from "../../Form/Button/Button";
 import css from "./ModalEnd.module.css";
 
 export const ModalEnd = () => {
-  const { length, drops, steps } = useAppSelector(s => s.cards.stats);
+  const { stats, cards, snapshots } = useAppSelector(s => s.cards);
+  const isAuth = useAppSelector(s => s.user.isAuth);
   const dispatch = useAppDispatch();
   const addToast = useToast();
   const [isLoading, setLoading] = useState(false);
@@ -20,19 +21,31 @@ export const ModalEnd = () => {
     setLoading(true);
     ImportAync([import("../../../../firebase.config")], async ([{ auth }]) => {
       const token = await auth.currentUser?.getIdToken(true);
-      const cards = JSON.parse(localStorage.getItem(LOCAL_CARDS) || "[]") as TGrid;
+      const localCards = JSON.parse(localStorage.getItem(LOCAL_CARDS) || "[]") as TGrid;
+      const creator = localStorage.getItem(CREATOR);
+      const mapId = localStorage.getItem(MAPID);
+
+      if (!cards?.every(cell => !cell.length)) throw new Error("Карта не пройдена до конца.");
+      if (!localCards.length) throw new Error("Карта не была сохранена. Ошибка записи.");
+
       const res = await postFetch(
         "/api/maps/set",
         {
-          stats: { length, drops, steps },
-          cards,
+          stats,
+          cards: localCards,
+          snapshots,
+          creator: creator || null,
+          mapId,
         },
         token
       );
+
       const response = (await res.json()) as TSimpleResponse;
       addToast(response.message, response.success ? "success" : "error");
       if (response.success) dispatch(closeModal());
-    }).finally(() => setLoading(false));
+    })
+      .catch(e => addToast(e.message, "error"))
+      .finally(() => setLoading(false));
   }
 
   return (
@@ -41,13 +54,15 @@ export const ModalEnd = () => {
       <h2 className={css.article__subtitle}>Вы прошли игру!</h2>
       <h3 className={css.article__stats}>Статистика:</h3>
       <ul className={css.article__list}>
-        <li>Длина: {length}</li>
-        <li>Шаги: {steps}</li>
-        <li>Сбросы: {drops}</li>
+        <li>Длина: {stats.length}</li>
+        <li>Шаги: {stats.steps}</li>
+        <li>Сбросы: {stats.drops}</li>
       </ul>
-      <Button styleType="button" className={css.article__button} onClick={publishHandler} disabled={isLoading}>
-        Опубликовать
-      </Button>
+      {isAuth && (
+        <Button styleType="button" className={css.article__button} onClick={publishHandler} disabled={isLoading}>
+          Опубликовать
+        </Button>
+      )}
     </section>
   );
 };

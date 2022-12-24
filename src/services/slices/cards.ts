@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { MAX_CARD_VALUE } from "../../constants/card";
-import { TCell, TGrid } from "../../types/card";
+import { TCard, TCell, TGrid } from "../../types/card";
 import { isValidStack } from "../../utils/isValidStack";
 import { hasFullStack } from "../../utils/cardStack";
 
-interface IStats {
+export interface IStats {
   length: number;
   steps: number;
   drops: number;
@@ -25,7 +25,7 @@ const initialState: SelectState = {
   // prettier-ignore
   cards: [],
   isFreeMode: false,
-  isShowEndModal: true,
+  isShowEndModal: false,
   dragCards: null,
   dragId: null,
   snapshots: [],
@@ -47,6 +47,9 @@ export const cardSlice = createSlice({
     setCards(state, action: PayloadAction<TGrid | null>) {
       state.cards = action.payload;
     },
+    pushCard(state, action: PayloadAction<[number, TCard]>) {
+      if (state.cards) state.cards[action.payload[0]].push(action.payload[1]);
+    },
     setStats(state, action: PayloadAction<IStats>) {
       state.stats = action.payload;
     },
@@ -61,9 +64,7 @@ export const cardSlice = createSlice({
       state.isShowEndModal = !!state.cards?.every(cell => cell.length === 0);
     },
     setDragCards(state, action: PayloadAction<TCell>) {
-      const dragIndex = state.cards?.findIndex(cell =>
-        cell.some(card => card.key === action.payload?.[0].key)
-      );
+      const dragIndex = state.cards?.findIndex(cell => cell.some(card => card.key === action.payload?.[0].key));
       state.dragCards = action.payload;
       state.dragId = dragIndex !== undefined ? dragIndex : -1;
     },
@@ -87,18 +88,14 @@ export const cardSlice = createSlice({
       if (fromIndex === null || toCell === undefined || !state.dragCards) return;
 
       const isValidMove =
-        state.isFreeMode ||
-        !toCell.length ||
-        isValidStack([toCell[toCell.length - 1], ...state.dragCards]);
+        state.isFreeMode || !toCell.length || isValidStack([toCell[toCell.length - 1], ...state.dragCards]);
       if (!isValidMove) {
         state.snapshots?.pop();
         state.statsSnapshots?.pop();
         return;
       }
 
-      const fromCardIndex = state.cards?.[+(fromIndex || 0)]?.findIndex(
-        card => card.key === state.dragCards?.[0].key
-      );
+      const fromCardIndex = state.cards?.[+(fromIndex || 0)]?.findIndex(card => card.key === state.dragCards?.[0].key);
 
       if (fromCardIndex !== undefined) state.cards?.[+fromIndex].splice(fromCardIndex);
       state.cards?.splice(action.payload, 1, [...toCell, ...state.dragCards]);
@@ -141,6 +138,7 @@ export const {
   setSnapshots,
   setStats,
   closeModal,
+  pushCard,
 } = cardSlice.actions;
 
 export const cardReducer = cardSlice.reducer;

@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { cardReducer } from "./slices/cards";
+import { recordReducer } from "./slices/records";
 import { selectReducer } from "./slices/select";
 import { toastReducer } from "./slices/toasts";
 import { userReducer } from "./slices/user";
@@ -11,6 +12,7 @@ export const store = configureStore({
     cards: cardReducer,
     user: userReducer,
     toast: toastReducer,
+    records: recordReducer,
   },
   devTools: true,
 });

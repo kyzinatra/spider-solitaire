@@ -1,6 +1,6 @@
 @media (prefers-color-scheme: dark) {
   .input {
-    border: 3px solid var(--border-color_dark);
+    border: 2px solid var(--border-color_dark);
     border-radius: var(--border-radius);
     background: none;
     color: var(--main-color);
@@ -9,7 +9,10 @@
     padding: 15px 10px;
     min-width: 310px;
   }
-
+  .input:focus {
+    outline: none;
+    border-color: var(--main-color);
+  }
   .input::placeholder {
     color: var(--main-color);
     opacity: 0.6;

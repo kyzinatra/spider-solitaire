@@ -12,12 +12,7 @@ interface ILayout {
   onlyAnonym?: boolean;
 }
 
-export const Layout: FC<PropsWithChildren<ILayout>> = ({
-  children,
-  title,
-  onlyAuth,
-  onlyAnonym,
-}) => {
+export const Layout: FC<PropsWithChildren<ILayout>> = ({ children, title, onlyAuth, onlyAnonym }) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const [isAuth, setAuth] = useState<undefined | boolean>();
@@ -61,13 +56,7 @@ export const Layout: FC<PropsWithChildren<ILayout>> = ({
     <>
       <Head>
         <title>{title || 'Задача "Пасьянс"'}</title>
-        <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta
-          name="description"
-          content="Задача пасьянс для конкурса КИО. Соберите свой пасьянс 'Паук' за минимальное количество ходов"
-        />
-        <link rel="shortcut icon" href="favicon.png" type="image/png" />
       </Head>
       {renderItem}
       <Toasts />

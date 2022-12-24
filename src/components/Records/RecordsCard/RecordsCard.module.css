@@ -1,0 +1,43 @@
+@media (prefers-color-scheme: dark) {
+  .card {
+    max-width: 400px;
+    min-height: max-content;
+    background-color: var(--card-color_dark);
+    padding: 15px;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    gap: 46px;
+    font-size: 1.05rem;
+    word-break: break-all;
+  }
+
+  .card p {
+    padding: 0;
+    margin: 0;
+  }
+
+  .card__info {
+    display: flex;
+    justify-content: space-between;
+    gap: 45px;
+  }
+
+  .card__stats {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .card__play,
+  .card__play:hover,
+  .card__play:active {
+    box-shadow: none;
+    width: 100%;
+    font-weight: 400;
+  }
+  .card__creator {
+    color: red;
+  }
+}

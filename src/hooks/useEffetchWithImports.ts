@@ -22,6 +22,7 @@ export function useEffectWithImports<T extends Import[] | []>(
       })
       .catch(e => {
         toast(e.message, "error", e.code);
+        console.error(e);
       });
 
     return () => {

@@ -10,16 +10,10 @@ import { Nav } from "../components/Nav/Nav";
 import { Stats } from "../components/Stats/Stats";
 
 import { useAppDispatch, useAppSelector } from "../services";
-import {
-  setCards,
-  setDragMode,
-  setStats,
-  setSnapshots,
-  closeModal,
-} from "../services/slices/cards";
+import { setCards, setDragMode, setStats, setSnapshots, closeModal } from "../services/slices/cards";
 
 import css from "./index.module.css";
-import { LOCAL_CARDS } from "../constants/card";
+import { LOCAL_CARDS, startCards } from "../constants/card";
 import { Modal } from "../components/Modal/Modal";
 import { ModalEnd } from "../components/Modal/ModalEnd/ModalEnd";
 
@@ -29,8 +23,7 @@ export default function Index() {
   useEffect(() => {
     dispatch(setDragMode(false));
     //? Reset cards to locals variant
-    // TODO we must check on server is this correct cards moving and the same combination as a original there (if this is not cards from constructor)!!
-    dispatch(setCards(JSON.parse(localStorage.getItem(LOCAL_CARDS) || "[]")));
+    dispatch(setCards(JSON.parse(localStorage.getItem(LOCAL_CARDS) || startCards)));
     dispatch(setStats({ length: 0, steps: 0, drops: 0 }));
     dispatch(setSnapshots([]));
   }, [dispatch]);
@@ -44,9 +37,7 @@ export default function Index() {
       <main className={css.main}>
         <Context cards={cards}>
           <Grid />
-          <DragOverlay>
-            {dragCards && <CardWrapper isUpFocus index={0} cell={dragCards} />}
-          </DragOverlay>
+          <DragOverlay>{dragCards && <CardWrapper isUpFocus index={0} cell={dragCards} />}</DragOverlay>
         </Context>
       </main>
       <Modal

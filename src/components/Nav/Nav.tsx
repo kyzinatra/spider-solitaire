@@ -26,7 +26,7 @@ export const Nav: FC = () => {
         <NavLink href="/constructor" shouldRender={isAuth}>
           <Image src="/build.svg" width={ICON_SIZE} height={ICON_SIZE} alt="Конструктор" />
         </NavLink>
-        <NavLink href="/records">
+        <NavLink href="/records" shouldRender={isAuth}>
           <Image src="/stars.svg" width={ICON_SIZE} height={ICON_SIZE} alt="Рекорды" />
         </NavLink>
         <NavLink href={isAuth ? "/profile" : "/login"}>

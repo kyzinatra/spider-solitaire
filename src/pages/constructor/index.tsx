@@ -40,9 +40,7 @@ function ConstructorPage() {
         <Context cards={[...(cards || []), ...allCards]}>
           <Constructor cards={allCards} />
           <Grid />
-          <DragOverlay>
-            {dragCards && <CardWrapper isUpFocus index={0} cell={dragCards} />}
-          </DragOverlay>
+          <DragOverlay>{dragCards && <CardWrapper isUpFocus index={0} cell={dragCards} />}</DragOverlay>
         </Context>
       </main>
     </Layout>

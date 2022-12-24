@@ -1,0 +1,11 @@
+.nav__list {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav__inputs {
+  display: flex;
+  gap: 30px;
+}

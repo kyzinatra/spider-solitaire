@@ -1,14 +1,16 @@
-import admin, { database } from "firebase-admin";
+import admin from "firebase-admin";
 import "firebase-admin/firestore";
 import "firebase-admin/app";
 
 import { App, initializeApp, ServiceAccount } from "firebase-admin/app";
-import { getAuth } from "firebase-admin/auth";
+import { Auth, getAuth } from "firebase-admin/auth";
+import { Database } from "firebase-admin/lib/database/database";
 
 let app: App | undefined;
 const env = process.env;
-
-if (!admin.apps.length) {
+let auth: Auth | undefined;
+let db: Database | undefined;
+if (!admin?.apps?.length) {
   app = initializeApp({
     credential: admin.credential.cert({
       type: env.TYPE,
@@ -26,6 +28,8 @@ if (!admin.apps.length) {
   });
 }
 
-export { app };
-export const auth = getAuth(app);
-export const db = database(app);
+
+auth = getAuth();
+db = admin.database();
+
+export { app, auth, db };
