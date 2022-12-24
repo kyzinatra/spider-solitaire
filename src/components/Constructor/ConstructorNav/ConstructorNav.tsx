@@ -40,7 +40,7 @@ export const ConstructorNav = () => {
   function GenerateCards(e: MouseEvent) {
     if ((gridCards?.length || 0) < 2) return addToast("Добавьте хотя бы 2 поля для карт", "error");
     const cells = gridCards?.length as number;
-    for (let card of Object.keys(CARD_VALUES)) {
+    for (let card of Object.keys(CARD_VALUES).reverse()) {
       dispatch(
         pushCard([
           getRand(0, cells),

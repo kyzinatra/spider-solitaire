@@ -9,7 +9,6 @@ import { Database } from "firebase-admin/lib/database/database";
 let app: App | undefined;
 const env = process.env;
 let auth: Auth | undefined;
-let db: Database | undefined;
 if (!admin?.apps?.length) {
   app = initializeApp({
     credential: admin.credential.cert({
@@ -27,9 +26,4 @@ if (!admin?.apps?.length) {
     databaseURL: env.NEXT_PUBLIC_DB_URL,
   });
 }
-
-
-auth = getAuth();
-db = admin.database();
-
-export { app, auth, db };
+export { app };
