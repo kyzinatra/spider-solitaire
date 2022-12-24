@@ -33,17 +33,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const user = await auth.getUser(claims.uid);
     if (user.uid) {
       const ID = uuid();
-      db.ref("/maps/" + ID).set({
-        userId: user.uid,
-        userEmail: user.email,
-        displayName: user.displayName,
-        map: cards,
-        stats,
-        mapId: mapId || uuid(),
-        recordId: ID,
-        creator: creator || user.displayName,
-      });
-      res.status(200).json({ success: true, message: "Карта успешно добавлена!" });
+      db.ref("/maps/" + ID)
+        .set({
+          userId: user.uid,
+          userEmail: user.email,
+          displayName: user.displayName,
+          map: cards,
+          stats,
+          mapId: mapId || uuid(),
+          recordId: ID,
+          creator: creator || user.displayName,
+        })
+        .then(() => {
+          res.status(200).json({ success: true, message: "Карта успешно добавлена!" });
+        });
     } else {
       res.status(400).json({ success: false, message: "Что-то пошло не так..." });
     }
