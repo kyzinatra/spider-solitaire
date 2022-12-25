@@ -1,12 +1,15 @@
 import { AppCheck, ReCaptchaV3Provider, setTokenAutoRefreshEnabled, initializeAppCheck } from "firebase/app-check";
 import { getDatabase } from "firebase/database";
+import { DEBUG_TOKEN } from "./debugtoken";
 import { app } from "./firebase.config";
 
 let appCheck: AppCheck;
 if (typeof document !== "undefined") {
   // @ts-ignore
+  self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+
   appCheck = initializeAppCheck(app, {
-    provider: new ReCaptchaV3Provider(process.env.NEXT_PUBLIC_CAPTHCA_KEY || ""),
+    provider: new ReCaptchaV3Provider(DEBUG_TOKEN || process.env.NEXT_PUBLIC_CAPTHCA_KEY),
 
     isTokenAutoRefreshEnabled: true,
   });

@@ -42,7 +42,7 @@ export const RecordsCard: FC<IRecordsCard> = ({ displayName, creator, steps, len
   return (
     <div className={css.card}>
       <div className={css.card__info}>
-        <p>Результат {displayName}!</p>
+        <p className={css.card__player}>Результат {displayName}!</p>
         <p>#{mapName.toUpperCase()}</p>
       </div>
 
