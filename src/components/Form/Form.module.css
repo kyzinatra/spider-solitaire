@@ -13,7 +13,7 @@
 }
 
 .form__reset {
-  color: white;
+  color: var(--text-color_dark);
   text-decoration: none;
   text-align: center;
   margin-top: -10px;
@@ -32,11 +32,18 @@
 }
 
 .form__title {
-  color: var(--main-color);
+  color: var(--text-color_dark);
   margin-bottom: 20px;
 }
 
 .form__providers {
   display: flex;
   justify-content: space-around;
+}
+
+@media (prefers-color-scheme: dark) {
+  .form__reset,
+  .form__title {
+    color: var(--text-color);
+  }
 }

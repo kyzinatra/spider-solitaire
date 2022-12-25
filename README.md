@@ -85,7 +85,7 @@ function Card(isFocusUp, cards) {
         <span>{cards[0].title}</span> // Показываем карту
       </div>
       // Если нам есть, что рендерить ниже, то мы прокидываем состояние фокуса вниз и снова запускаем функцию Card
-      {cards.length > 1 && <Card isUpFocus={isCardInFoucs} cards={cards.slice(1)} />}
+      {cards.length > 1 && <Card isUpFocus={isFocusUp || isCardInFoucs} cards={cards.slice(1)} />}
     </div>
   );
 }
