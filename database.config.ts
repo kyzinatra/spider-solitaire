@@ -5,7 +5,7 @@ import { app } from "./firebase.config";
 let appCheck: AppCheck;
 if (typeof document !== "undefined") {
   // @ts-ignore
-  self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+  // self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
 
   appCheck = initializeAppCheck(app, {
     provider: new ReCaptchaV3Provider(process.env.NEXT_PUBLIC_CAPTHCA_KEY || ""),
